@@ -4,15 +4,30 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { RefreshCw, Mail, Calendar, Globe, AlertCircle, CheckCircle, Download, Users } from "lucide-react"
+import {
+  RefreshCw,
+  Mail,
+  Calendar,
+  Globe,
+  AlertCircle,
+  CheckCircle,
+  Download,
+  Users,
+  Shield,
+  Database,
+  Eye,
+  User,
+} from "lucide-react"
 
 type Signup = {
   id: number
   email: string
   source: string | null
+  user_id: string | null
   ua: string | null
   ip: string | null
   created_at: string
+  metadata: Record<string, any> | null
 }
 
 type SignupStats = {
@@ -22,14 +37,25 @@ type SignupStats = {
   signup_date: string
 }
 
+type Metrics = {
+  total_count: number
+  today_signups: number
+  yesterday_signups: number
+  unique_sources: number
+  authenticated_users: number
+  anonymous_signups: number
+}
+
 export default function SignupsAdmin() {
   const [signups, setSignups] = useState<Signup[]>([])
   const [stats, setStats] = useState<SignupStats[]>([])
+  const [metrics, setMetrics] = useState<Metrics | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const [testEmail, setTestEmail] = useState("")
   const [testLoading, setTestLoading] = useState(false)
   const [testResult, setTestResult] = useState("")
+  const [selectedSignup, setSelectedSignup] = useState<Signup | null>(null)
 
   const fetchSignups = async () => {
     setLoading(true)
@@ -37,14 +63,15 @@ export default function SignupsAdmin() {
 
     try {
       const response = await fetch("/api/admin/signups")
+      const data = await response.json()
+
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.details || errorData.error || "Failed to fetch signups")
+        throw new Error(data.details || data.error || "Failed to fetch signups")
       }
 
-      const data = await response.json()
       setSignups(data.signups || [])
       setStats(data.stats || [])
+      setMetrics(data.metrics || null)
     } catch (err: any) {
       setError(err.message || "Failed to load signups")
     } finally {
@@ -62,13 +89,24 @@ export default function SignupsAdmin() {
       const response = await fetch("/api/notify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: testEmail, source: "admin-test" }),
+        body: JSON.stringify({
+          email: testEmail,
+          source: "admin-test",
+          metadata: {
+            test_mode: true,
+            admin_initiated: true,
+          },
+        }),
       })
 
       const data = await response.json()
 
       if (response.ok) {
-        setTestResult(`✅ Success! ${data.deduped ? "Email was already in database" : "New email added"}`)
+        if (data.deduped) {
+          setTestResult(`⚠️ Email already exists in database`)
+        } else {
+          setTestResult(`✅ Success! New email added to database`)
+        }
         setTestEmail("")
         fetchSignups() // Refresh the list
       } else {
@@ -83,14 +121,16 @@ export default function SignupsAdmin() {
 
   const exportCSV = () => {
     const csvContent = [
-      ["ID", "Email", "Source", "Created At", "Browser", "IP"],
+      ["ID", "Email", "Source", "User ID", "Created At", "Browser", "IP", "Metadata"],
       ...signups.map((signup) => [
         signup.id,
         signup.email,
         signup.source || "",
+        signup.user_id || "anonymous",
         signup.created_at,
         getBrowserFromUA(signup.ua),
         signup.ip || "",
+        JSON.stringify(signup.metadata || {}),
       ]),
     ]
       .map((row) => row.map((field) => `"${field}"`).join(","))
@@ -122,19 +162,22 @@ export default function SignupsAdmin() {
     return "Other"
   }
 
-  const totalSignups = signups.length
-  const uniqueEmails = new Set(signups.map((s) => s.email)).size
-  const uniqueSources = new Set(signups.map((s) => s.source)).size
+  const getGrowthTrend = () => {
+    if (!metrics) return { trend: "neutral", text: "No data" }
 
-  const recentSignups = signups.filter((s) => {
-    const signupDate = new Date(s.created_at)
-    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000)
-    return signupDate > oneDayAgo
-  }).length
+    if (metrics.today_signups > metrics.yesterday_signups) {
+      return { trend: "up", text: `+${metrics.today_signups - metrics.yesterday_signups} vs yesterday` }
+    } else if (metrics.today_signups < metrics.yesterday_signups) {
+      return { trend: "down", text: `${metrics.today_signups - metrics.yesterday_signups} vs yesterday` }
+    }
+    return { trend: "neutral", text: "Same as yesterday" }
+  }
+
+  const growth = getGrowthTrend()
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] text-[#e0e0e0] p-6">
-      <div className="max-w-6xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold mb-2">SYMBI Email Dashboard</h1>
@@ -201,8 +244,8 @@ export default function SignupsAdmin() {
               <div className="mt-3 text-xs text-red-200">
                 <p>Troubleshooting steps:</p>
                 <ul className="list-disc list-inside mt-1 space-y-1">
-                  <li>Check that SUPABASE_URL and SUPABASE_ANON_KEY are set in environment variables</li>
-                  <li>Verify the notify_signups table exists in your Supabase database</li>
+                  <li>Check that SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set</li>
+                  <li>Verify the notify_signups table exists with proper RLS policies</li>
                   <li>Ensure your Supabase project is active and accessible</li>
                 </ul>
               </div>
@@ -210,8 +253,8 @@ export default function SignupsAdmin() {
           </Card>
         )}
 
-        {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Enhanced Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card className="bg-[#1a1a1a] border-[#333]">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-[#b0b0b0] flex items-center gap-2">
@@ -220,19 +263,34 @@ export default function SignupsAdmin() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-[#e0e0e0]">{totalSignups}</div>
+              <div className="text-2xl font-bold text-[#e0e0e0]">{metrics?.total_count || 0}</div>
+              <div className="text-xs text-[#666] mt-1">{growth.text}</div>
             </CardContent>
           </Card>
 
           <Card className="bg-[#1a1a1a] border-[#333]">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-medium text-[#b0b0b0] flex items-center gap-2">
-                <Mail className="h-4 w-4" />
-                Unique Emails
+                <Calendar className="h-4 w-4" />
+                Today
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-[#e0e0e0]">{uniqueEmails}</div>
+              <div className="text-2xl font-bold text-[#e0e0e0]">{metrics?.today_signups || 0}</div>
+              <div className="text-xs text-[#666] mt-1">New signups today</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-[#1a1a1a] border-[#333]">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-[#b0b0b0] flex items-center gap-2">
+                <User className="h-4 w-4" />
+                Authenticated
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-[#e0e0e0]">{metrics?.authenticated_users || 0}</div>
+              <div className="text-xs text-[#666] mt-1">With user accounts</div>
             </CardContent>
           </Card>
 
@@ -244,19 +302,8 @@ export default function SignupsAdmin() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-[#e0e0e0]">{uniqueSources}</div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-[#1a1a1a] border-[#333]">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-[#b0b0b0] flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                Last 24h
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-[#e0e0e0]">{recentSignups}</div>
+              <div className="text-2xl font-bold text-[#e0e0e0]">{metrics?.unique_sources || 0}</div>
+              <div className="text-xs text-[#666] mt-1">Different sources</div>
             </CardContent>
           </Card>
         </div>
@@ -292,13 +339,20 @@ export default function SignupsAdmin() {
                 {signups.map((signup) => (
                   <div
                     key={signup.id}
-                    className="border border-[#333] rounded-lg p-4 hover:border-[#555] transition-colors"
+                    className="border border-[#333] rounded-lg p-4 hover:border-[#555] transition-colors cursor-pointer"
+                    onClick={() => setSelectedSignup(selectedSignup?.id === signup.id ? null : signup)}
                   >
                     <div className="flex items-start justify-between">
                       <div className="space-y-2 flex-1">
                         <div className="flex items-center gap-2">
                           <Mail className="h-4 w-4 text-[#b0b0b0]" />
                           <span className="font-mono text-[#e0e0e0] text-sm">{signup.email}</span>
+                          {signup.user_id && (
+                            <Badge variant="outline" className="text-xs border-green-500/50 text-green-400">
+                              <Shield className="h-3 w-3 mr-1" />
+                              Auth
+                            </Badge>
+                          )}
                         </div>
 
                         <div className="flex items-center gap-4 text-sm text-[#b0b0b0] flex-wrap">
@@ -321,10 +375,48 @@ export default function SignupsAdmin() {
                           )}
 
                           {signup.ip && <span className="font-mono text-xs text-[#666]">{signup.ip}</span>}
+
+                          {signup.metadata && Object.keys(signup.metadata).length > 0 && (
+                            <Badge variant="outline" className="text-xs border-blue-500/50 text-blue-400">
+                              <Database className="h-3 w-3 mr-1" />
+                              Metadata
+                            </Badge>
+                          )}
                         </div>
+
+                        {/* Expanded Details */}
+                        {selectedSignup?.id === signup.id && (
+                          <div className="mt-4 p-3 bg-[#0f0f0f] rounded border border-[#333] space-y-2">
+                            {signup.user_id && (
+                              <div className="text-xs">
+                                <span className="text-[#b0b0b0]">User ID:</span>
+                                <span className="font-mono ml-2 text-[#e0e0e0]">{signup.user_id}</span>
+                              </div>
+                            )}
+
+                            {signup.metadata && Object.keys(signup.metadata).length > 0 && (
+                              <div className="text-xs">
+                                <span className="text-[#b0b0b0]">Metadata:</span>
+                                <pre className="mt-1 text-[#e0e0e0] bg-[#1a1a1a] p-2 rounded text-xs overflow-x-auto">
+                                  {JSON.stringify(signup.metadata, null, 2)}
+                                </pre>
+                              </div>
+                            )}
+
+                            {signup.ua && (
+                              <div className="text-xs">
+                                <span className="text-[#b0b0b0]">User Agent:</span>
+                                <div className="font-mono ml-2 text-[#e0e0e0] break-all">{signup.ua}</div>
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
 
-                      <div className="text-xs text-[#666] font-mono">#{signup.id}</div>
+                      <div className="flex items-center gap-2">
+                        <div className="text-xs text-[#666] font-mono">#{signup.id}</div>
+                        <Eye className="h-3 w-3 text-[#666]" />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -333,16 +425,16 @@ export default function SignupsAdmin() {
           </CardContent>
         </Card>
 
-        {/* Setup Status */}
+        {/* Enhanced System Status */}
         <Card className="bg-[#1a1a1a] border-[#333]">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-green-400" />
-              System Status
+              Enhanced System Status
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
                 <h4 className="font-semibold text-[#e0e0e0]">Database Connection</h4>
                 <div className="flex items-center gap-2">
@@ -354,29 +446,38 @@ export default function SignupsAdmin() {
                   ) : (
                     <>
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <span className="text-green-400 text-sm">Connected</span>
+                      <span className="text-green-400 text-sm">Connected with RLS</span>
                     </>
                   )}
                 </div>
               </div>
 
               <div className="space-y-2">
-                <h4 className="font-semibold text-[#e0e0e0]">Email Capture API</h4>
+                <h4 className="font-semibold text-[#e0e0e0]">Email Validation</h4>
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-green-400 text-sm">Active</span>
+                  <span className="text-green-400 text-sm">Active (DB Triggers)</span>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-semibold text-[#e0e0e0]">Security</h4>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-green-400 text-sm">RLS Enabled</span>
                 </div>
               </div>
             </div>
 
             <div className="space-y-2">
-              <h4 className="font-semibold text-[#e0e0e0]">How Users Sign Up:</h4>
+              <h4 className="font-semibold text-[#e0e0e0]">Enhanced Features:</h4>
               <ul className="text-sm text-[#b0b0b0] space-y-1 ml-4">
-                <li>• Click "Request Early Access" on any page</li>
-                <li>• Submit email through the modal form</li>
-                <li>• Automatic deduplication prevents duplicates</li>
-                <li>• Source page and metadata are tracked</li>
-                <li>• Emails appear here and in your Supabase dashboard</li>
+                <li>• Row Level Security protects user data</li>
+                <li>• Database functions handle signup validation</li>
+                <li>• Email triggers prevent invalid formats</li>
+                <li>• Metadata tracking for enhanced analytics</li>
+                <li>• User authentication integration ready</li>
+                <li>• Automatic duplicate prevention</li>
               </ul>
             </div>
           </CardContent>

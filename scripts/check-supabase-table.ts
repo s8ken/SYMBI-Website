@@ -1,34 +1,54 @@
-// Script to verify the Supabase table structure
-async function checkTableStructure() {
-  const csvUrl =
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Supabase%20Snippet%20Create%20Notify%20Signups%20Table-LadYMi8Jda2mBo1xoeiC79deKPlNw1.csv"
+// Script to verify Supabase table structure
+// This helps debug any table setup issues
+
+async function checkSupabaseTable() {
+  const supabaseUrl = process.env.SUPABASE_URL
+  const supabaseKey = process.env.SUPABASE_ANON_KEY
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.error("Missing Supabase environment variables")
+    console.log("Required: SUPABASE_URL, SUPABASE_ANON_KEY")
+    return
+  }
 
   try {
-    const response = await fetch(csvUrl)
-    const csvText = await response.text()
+    const { createClient } = await import("@supabase/supabase-js")
+    const supabase = createClient(supabaseUrl, supabaseKey)
 
-    console.log("Table structure from Supabase:")
-    console.log(csvText)
+    // Check if table exists and get structure
+    const { data: tableInfo, error: tableError } = await supabase.from("notify_signups").select("*").limit(1)
 
-    // Parse CSV to show structure
-    const lines = csvText.trim().split("\n")
-    const headers = lines[0].split(",")
-
-    console.log("\nTable columns:")
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(",")
-      const columnName = values[0]
-      const dataType = values[1]
-      const isNullable = values[4]
-      const defaultValue = values[3]
-
-      console.log(
-        `- ${columnName}: ${dataType} ${isNullable === "NO" ? "NOT NULL" : "NULLABLE"} ${defaultValue !== "null" ? `DEFAULT ${defaultValue}` : ""}`,
-      )
+    if (tableError) {
+      console.error("Table check failed:", tableError.message)
+      return
     }
-  } catch (error) {
-    console.error("Error fetching table structure:", error)
+
+    console.log("✅ Table exists and is accessible")
+
+    // Get recent signups
+    const { data: signups, error: signupsError } = await supabase
+      .from("notify_signups")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(5)
+
+    if (signupsError) {
+      console.error("Failed to fetch signups:", signupsError.message)
+      return
+    }
+
+    console.log(`📊 Found ${signups?.length || 0} recent signups`)
+
+    if (signups && signups.length > 0) {
+      console.log("Recent signups:")
+      signups.forEach((signup, index) => {
+        console.log(`${index + 1}. ${signup.email} (${signup.source}) - ${signup.created_at}`)
+      })
+    }
+  } catch (error: any) {
+    console.error("Script error:", error.message)
   }
 }
 
-checkTableStructure()
+// Run the check
+checkSupabaseTable()

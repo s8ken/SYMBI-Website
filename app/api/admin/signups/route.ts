@@ -4,13 +4,14 @@ import { createClient } from "@supabase/supabase-js"
 export async function GET() {
   try {
     const supabaseUrl = process.env.SUPABASE_URL
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_ANON_KEY
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
     if (!supabaseUrl || !supabaseKey) {
       return NextResponse.json(
         {
-          error: "Supabase configuration missing",
-          details: "Make sure SUPABASE_URL and SUPABASE_ANON_KEY are set in your environment variables",
+          error: "Missing Supabase configuration",
+          details: "SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables are required for admin access",
+          suggestion: "Make sure you're using the SERVICE_ROLE_KEY (not ANON_KEY) for admin operations",
         },
         { status: 500 },
       )
@@ -20,31 +21,41 @@ export async function GET() {
       auth: { persistSession: false, autoRefreshToken: false },
     })
 
-    // Test connection first by trying to count records
+    // Test connection and get total count
     const { count, error: countError } = await supabase
       .from("notify_signups")
       .select("*", { count: "exact", head: true })
 
     if (countError) {
+      console.error("Supabase count error:", countError)
       return NextResponse.json(
         {
-          error: "Database table not found",
+          error: "Database access failed",
           details: countError.message,
-          suggestion:
-            "Make sure you've run the SQL script to create the notify_signups table in your Supabase dashboard",
+          suggestion: "Ensure the notify_signups table exists and RLS policies allow service_role access",
         },
         { status: 500 },
       )
     }
 
-    // Fetch recent signups
+    // Fetch recent signups with all fields
     const { data: signups, error: signupsError } = await supabase
       .from("notify_signups")
-      .select("*")
+      .select(`
+        id,
+        email,
+        source,
+        user_id,
+        ua,
+        ip,
+        created_at,
+        metadata
+      `)
       .order("created_at", { ascending: false })
       .limit(100)
 
     if (signupsError) {
+      console.error("Supabase signups error:", signupsError)
       return NextResponse.json(
         {
           error: "Failed to fetch signups",
@@ -87,14 +98,31 @@ export async function GET() {
       signup_date: stat.signup_date,
     }))
 
+    // Calculate additional metrics
+    const today = new Date().toISOString().split("T")[0]
+    const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split("T")[0]
+
+    const todaySignups =
+      signups?.filter((s) => new Date(s.created_at).toISOString().split("T")[0] === today).length || 0
+
+    const yesterdaySignups =
+      signups?.filter((s) => new Date(s.created_at).toISOString().split("T")[0] === yesterday).length || 0
+
     return NextResponse.json({
       signups: signups || [],
       stats: finalStats,
-      total_count: count || 0,
+      metrics: {
+        total_count: count || 0,
+        today_signups: todaySignups,
+        yesterday_signups: yesterdaySignups,
+        unique_sources: new Set(signups?.map((s) => s.source)).size,
+        authenticated_users: signups?.filter((s) => s.user_id).length || 0,
+        anonymous_signups: signups?.filter((s) => !s.user_id).length || 0,
+      },
       success: true,
     })
   } catch (error: any) {
-    console.error("Admin signups error:", error)
+    console.error("Admin signups API error:", error)
     return NextResponse.json(
       {
         error: "Internal server error",
