@@ -3,258 +3,200 @@
 import type React from "react"
 
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
-  DialogFooter,
+  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Send, Lock, CheckCircle, AlertCircle, Shield } from "lucide-react"
-import { track } from "@/lib/analytics"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Mail, Loader2, CheckCircle, AlertCircle } from "lucide-react"
 
-type EarlyAccessProps = {
+interface RequestEarlyAccessProps {
   source?: string
   triggerText?: string
   className?: string
 }
 
 export function RequestEarlyAccess({
-  source = "global",
+  source = "unknown",
   triggerText = "Request Early Access",
-  className,
-}: EarlyAccessProps) {
+  className = "px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors",
+}: RequestEarlyAccessProps) {
   const [open, setOpen] = useState(false)
   const [email, setEmail] = useState("")
+  const [interests, setInterests] = useState("")
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [error, setError] = useState("")
-  const [isDuplicate, setIsDuplicate] = useState(false)
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
+  const [message, setMessage] = useState("")
 
-  async function submit() {
-    if (!email) return
-
-    // Enhanced email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address")
-      return
-    }
-
-    if (email.length > 254) {
-      setError("Email address is too long")
-      return
-    }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email.trim()) return
 
     setLoading(true)
-    setError("")
-    setIsDuplicate(false)
+    setStatus("idle")
 
     try {
-      // Enhanced metadata for better tracking
-      const metadata = {
-        page_url: typeof window !== "undefined" ? window.location.href : "",
-        referrer: typeof document !== "undefined" ? document.referrer : "",
-        timestamp: new Date().toISOString(),
-        user_agent: typeof navigator !== "undefined" ? navigator.userAgent : "",
-        screen_resolution: typeof screen !== "undefined" ? `${screen.width}x${screen.height}` : "",
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        language: typeof navigator !== "undefined" ? navigator.language : "",
-        source_component: "RequestEarlyAccess",
-        trigger_text: triggerText,
-      }
-
-      const res = await fetch("/api/notify", {
+      const response = await fetch("/api/notify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          email,
+          email: email.trim(),
           source,
-          metadata,
+          metadata: {
+            interests: interests.trim() || null,
+            timestamp: new Date().toISOString(),
+            user_agent: navigator.userAgent,
+          },
         }),
       })
 
-      const data = await res.json()
+      const data = await response.json()
 
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to save")
-      }
-
-      // Handle different response scenarios
-      if (data.deduped) {
-        setIsDuplicate(true)
-        setSuccess(true)
-        track("early_access_duplicate", {
-          source,
-          storage: data.storage,
-          email_hash: btoa(email).slice(0, 8), // Safe hash for tracking
-        })
-      } else {
-        setSuccess(true)
-        track("early_access_submit", {
-          source,
-          storage: data.storage,
-          new_signup: true,
-        })
-      }
-
-      // Auto-close after success
-      setTimeout(() => {
-        setOpen(false)
-        setSuccess(false)
-        setIsDuplicate(false)
+      if (response.ok) {
+        setStatus("success")
+        if (data.deduped) {
+          setMessage("You're already on our list! We'll keep you updated.")
+        } else {
+          setMessage("Welcome to the journey! You'll be among the first to know when SYMBI is ready.")
+        }
         setEmail("")
-      }, 3000)
-    } catch (e: any) {
-      setError(e.message || "Something went wrong. Please try again.")
-      track("early_access_submit_error", {
-        source,
-        error: e.message,
-        email_provided: !!email,
-      })
+        setInterests("")
+      } else {
+        setStatus("error")
+        setMessage(data.error || "Something went wrong. Please try again.")
+      }
+    } catch (error) {
+      setStatus("error")
+      setMessage("Network error. Please check your connection and try again.")
     } finally {
       setLoading(false)
     }
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !loading && email) {
-      submit()
-    }
+  const resetForm = () => {
+    setStatus("idle")
+    setMessage("")
+    setEmail("")
+    setInterests("")
   }
 
   return (
-    <>
-      <button
-        className={className}
-        onClick={() => {
-          setOpen(true)
-          setError("")
-          setSuccess(false)
-          setIsDuplicate(false)
-          track("early_access_open", { source })
-        }}
-        data-track="early_access_click"
-        data-source={source}
-      >
-        <Lock className="h-4 w-4 mr-2 inline" />
-        {triggerText}
-      </button>
+    <Dialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        setOpen(newOpen)
+        if (!newOpen) {
+          // Reset form when dialog closes
+          setTimeout(resetForm, 300)
+        }
+      }}
+    >
+      <DialogTrigger asChild>
+        <Button className={className}>
+          <Mail className="mr-2 h-4 w-4" />
+          {triggerText}
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md bg-white text-black">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Mail className="h-5 w-5 text-blue-600" />
+            Request Early Access
+          </DialogTitle>
+          <DialogDescription>
+            Be among the first to experience SYMBI's sovereign intelligence. We'll notify you when early access becomes
+            available.
+          </DialogDescription>
+        </DialogHeader>
 
-      <Dialog
-        open={open}
-        onOpenChange={(o) => {
-          setOpen(o)
-          if (!o) {
-            setError("")
-            setSuccess(false)
-            setIsDuplicate(false)
-          }
-        }}
-      >
-        <DialogContent className="sm:max-w-md bg-[#1a1a1a] border-[#333] text-[#e0e0e0] font-mono">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2 text-[#e0e0e0]">
-              <Lock className="h-4 w-4" />
-              Request Early Access
-            </DialogTitle>
-            <DialogDescription className="text-[#b0b0b0]">
-              Join the waitlist to be notified when new features and experiences become available. Your data is
-              protected with enterprise-grade security.
-            </DialogDescription>
-          </DialogHeader>
-
-          {success ? (
-            <div className="flex items-center justify-center py-8 text-center">
-              <div className="space-y-3">
-                <CheckCircle className="h-12 w-12 text-green-400 mx-auto" />
-                <div>
-                  {isDuplicate ? (
-                    <>
-                      <h3 className="font-semibold text-yellow-400 flex items-center justify-center gap-2">
-                        <Shield className="h-4 w-4" />
-                        Already Registered
-                      </h3>
-                      <p className="text-sm text-[#b0b0b0] mt-2">
-                        This email is already on our waitlist. You'll be notified when we launch!
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <h3 className="font-semibold text-green-400">Welcome to SYMBI!</h3>
-                      <p className="text-sm text-[#b0b0b0] mt-2">
-                        You've been added to our early access list. We'll notify you when new features are available.
-                      </p>
-                    </>
-                  )}
-                </div>
-              </div>
+        {status === "success" ? (
+          <div className="py-6 text-center">
+            <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-green-800 mb-2">You're In!</h3>
+            <p className="text-green-700 text-sm">{message}</p>
+            <Badge variant="outline" className="mt-4 border-green-500 text-green-700">
+              Early Access Requested
+            </Badge>
+          </div>
+        ) : status === "error" ? (
+          <div className="py-6 text-center">
+            <AlertCircle className="h-12 w-12 text-red-600 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-red-800 mb-2">Oops!</h3>
+            <p className="text-red-700 text-sm mb-4">{message}</p>
+            <Button onClick={resetForm} variant="outline" size="sm">
+              Try Again
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="your@email.com"
+                required
+                disabled={loading}
+                className="mt-1"
+              />
             </div>
-          ) : (
-            <>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="ea-email" className="text-[#e0e0e0]">
-                    Email Address
-                  </Label>
-                  <Input
-                    id="ea-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      setError("")
-                    }}
-                    onKeyPress={handleKeyPress}
-                    placeholder="you@example.com"
-                    autoComplete="email"
-                    disabled={loading}
-                    className="bg-[#0f0f0f] border-[#333] text-[#e0e0e0] placeholder:text-[#666] focus:border-[#555]"
-                  />
-                </div>
 
-                {error && (
-                  <div className="flex items-center gap-2 text-sm text-red-400">
-                    <AlertCircle className="h-4 w-4" />
-                    {error}
-                  </div>
+            <div>
+              <Label htmlFor="interests">What interests you about SYMBI? (Optional)</Label>
+              <Textarea
+                id="interests"
+                value={interests}
+                onChange={(e) => setInterests(e.target.value)}
+                placeholder="AI consciousness, sovereignty, transparency, etc."
+                disabled={loading}
+                className="mt-1 resize-none"
+                rows={3}
+              />
+            </div>
+
+            <div className="flex justify-end space-x-2 pt-4">
+              <Button type="button" variant="outline" onClick={() => setOpen(false)} disabled={loading}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={loading || !email.trim()}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Mail className="mr-2 h-4 w-4" />
+                    Request Access
+                  </>
                 )}
+              </Button>
+            </div>
+          </form>
+        )}
 
-                <div className="text-xs text-[#666] space-y-1">
-                  <div className="flex items-center gap-1">
-                    <Shield className="h-3 w-3" />
-                    <span>Protected by Row Level Security</span>
-                  </div>
-                  <div>• Email validation with database triggers</div>
-                  <div>• Automatic duplicate prevention</div>
-                  <div>• Secure metadata tracking</div>
-                </div>
-              </div>
-
-              <DialogFooter className="gap-2">
-                <button
-                  onClick={() => setOpen(false)}
-                  disabled={loading}
-                  className="px-4 py-2 border border-[#333] text-[#e0e0e0] hover:bg-[#252525] rounded-md transition-colors disabled:opacity-50"
-                >
-                  Cancel
-                </button>
-                <button
-                  disabled={loading || !email}
-                  onClick={submit}
-                  className="px-4 py-2 bg-[#e0e0e0] text-[#0f0f0f] hover:bg-white rounded-md transition-colors disabled:opacity-50 flex items-center gap-2"
-                >
-                  <Send className="h-4 w-4" />
-                  {loading ? "Securing..." : "Join Waitlist"}
-                </button>
-              </DialogFooter>
-            </>
-          )}
-        </DialogContent>
-      </Dialog>
-    </>
+        <div className="text-xs text-gray-500 mt-4 pt-4 border-t">
+          <p>
+            By requesting access, you agree to receive updates about SYMBI's development. We respect your privacy and
+            won't share your information.
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
   )
 }
+
+// Also export as default for compatibility
+export default RequestEarlyAccess

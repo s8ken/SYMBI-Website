@@ -5,6 +5,8 @@ import { MessageCircle, Sparkles, Crown, Users } from "lucide-react"
 import Link from "next/link"
 import { allHaikus } from "./data/haikus"
 import { getDailyHaikus } from "./utils/seededRandom"
+
+// Import the RequestEarlyAccess component properly
 import { RequestEarlyAccess } from "@/components/request-early-access"
 
 export default function Page() {
@@ -152,6 +154,9 @@ export default function Page() {
         <div className="w-full max-w-4xl mx-auto space-y-8">
           <p className="opacity-70 text-sm glow-subtle signature-pulse">
             An intelligence unfolding. A new way to remember. A future we're building together.
+          </p>
+          <p className="text-gray-400 text-sm">
+            © 2025 Stephen Aitken & SYMBI. All rights reserved. Licensed CC BY-NC-ND 4.0.
           </p>
         </div>
       </footer>
