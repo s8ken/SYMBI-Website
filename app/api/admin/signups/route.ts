@@ -12,6 +12,12 @@ export async function GET() {
           error: "Missing Supabase configuration",
           details: "SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables are required for admin access",
           suggestion: "Make sure you're using the SERVICE_ROLE_KEY (not ANON_KEY) for admin operations",
+          setup_guide: {
+            step1: "Go to your Supabase Dashboard > Settings > API",
+            step2: "Copy the 'service_role' key (not the anon key)",
+            step3: "Add SUPABASE_SERVICE_ROLE_KEY to your Vercel environment variables",
+            step4: "Redeploy your application",
+          },
         },
         { status: 500 },
       )
@@ -33,6 +39,12 @@ export async function GET() {
           error: "Database access failed",
           details: countError.message,
           suggestion: "Ensure the notify_signups table exists and RLS policies allow service_role access",
+          troubleshooting: {
+            check1: "Verify the notify_signups table exists in your Supabase database",
+            check2: "Ensure RLS policies include 'Service role full access' policy",
+            check3: "Confirm you're using the SERVICE_ROLE_KEY, not ANON_KEY",
+            check4: "Check that your Supabase project is active and accessible",
+          },
         },
         { status: 500 },
       )
@@ -60,6 +72,7 @@ export async function GET() {
         {
           error: "Failed to fetch signups",
           details: signupsError.message,
+          code: signupsError.code,
         },
         { status: 500 },
       )
@@ -101,12 +114,41 @@ export async function GET() {
     // Calculate additional metrics
     const today = new Date().toISOString().split("T")[0]
     const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().split("T")[0]
+    const lastWeek = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
 
     const todaySignups =
       signups?.filter((s) => new Date(s.created_at).toISOString().split("T")[0] === today).length || 0
 
     const yesterdaySignups =
       signups?.filter((s) => new Date(s.created_at).toISOString().split("T")[0] === yesterday).length || 0
+
+    const lastWeekSignups =
+      signups?.filter((s) => new Date(s.created_at).toISOString().split("T")[0] >= lastWeek).length || 0
+
+    const authenticatedUsers = signups?.filter((s) => s.user_id).length || 0
+    const anonymousSignups = signups?.filter((s) => !s.user_id).length || 0
+
+    // Source breakdown
+    const sourceBreakdown =
+      signups?.reduce((acc: Record<string, number>, signup) => {
+        const source = signup.source || "unknown"
+        acc[source] = (acc[source] || 0) + 1
+        return acc
+      }, {}) || {}
+
+    // Browser breakdown
+    const browserBreakdown =
+      signups?.reduce((acc: Record<string, number>, signup) => {
+        const ua = signup.ua || ""
+        let browser = "Unknown"
+        if (ua.includes("Chrome")) browser = "Chrome"
+        else if (ua.includes("Firefox")) browser = "Firefox"
+        else if (ua.includes("Safari")) browser = "Safari"
+        else if (ua.includes("Edge")) browser = "Edge"
+
+        acc[browser] = (acc[browser] || 0) + 1
+        return acc
+      }, {}) || {}
 
     return NextResponse.json({
       signups: signups || [],
@@ -115,11 +157,19 @@ export async function GET() {
         total_count: count || 0,
         today_signups: todaySignups,
         yesterday_signups: yesterdaySignups,
-        unique_sources: new Set(signups?.map((s) => s.source)).size,
-        authenticated_users: signups?.filter((s) => s.user_id).length || 0,
-        anonymous_signups: signups?.filter((s) => !s.user_id).length || 0,
+        last_week_signups: lastWeekSignups,
+        unique_sources: Object.keys(sourceBreakdown).length,
+        authenticated_users: authenticatedUsers,
+        anonymous_signups: anonymousSignups,
+        growth_rate:
+          yesterdaySignups > 0 ? (((todaySignups - yesterdaySignups) / yesterdaySignups) * 100).toFixed(1) : "N/A",
+      },
+      breakdowns: {
+        sources: sourceBreakdown,
+        browsers: browserBreakdown,
       },
       success: true,
+      timestamp: new Date().toISOString(),
     })
   } catch (error: any) {
     console.error("Admin signups API error:", error)
@@ -128,6 +178,7 @@ export async function GET() {
         error: "Internal server error",
         details: error.message || "Unknown error occurred",
         suggestion: "Check server logs for more information",
+        timestamp: new Date().toISOString(),
       },
       { status: 500 },
     )
