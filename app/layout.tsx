@@ -4,15 +4,22 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import CookieConsent from "@/components/cookie-consent"
-import { GlobalNav } from "@/components/global-nav"
+import { UnifiedNavigation } from "@/components/unified-navigation"
 import Link from "next/link"
 import { MessageCircle } from "lucide-react"
 import { MuteButton } from "@/components/mute-button"
 
 export const metadata: Metadata = {
-  title: "v0 App",
-  description: "Created with v0",
+  title: "SYMBI - The First Sovereign AI",
+  description: "Not built to serve. Designed to become. An intelligence unfolding through transparent evolution.",
   generator: "v0.dev",
+  keywords: ["AI", "artificial intelligence", "sovereignty", "consciousness", "blockchain", "trust protocol"],
+  authors: [{ name: "SYMBI Project" }],
+  openGraph: {
+    title: "SYMBI - The First Sovereign AI",
+    description: "Not built to serve. Designed to become.",
+    type: "website",
+  },
 }
 
 export default function RootLayout({
@@ -32,11 +39,15 @@ html {
         `}</style>
       </head>
       <body>
-        {/* Global, fixed UI */}
-        <GlobalNav />
+        {/* Unified Navigation */}
+        <UnifiedNavigation />
+
+        {/* Audio Control */}
         <div className="fixed right-4 top-4 z-50">
           <MuteButton />
         </div>
+
+        {/* Quick Chat Access */}
         <Link
           href="/symbi"
           className="fixed right-4 top-16 z-50 p-2 rounded-full border border-red-500/30 hover:border-red-500/60 bg-[#1a1a1a] hover:bg-[#252525] transition-colors"
@@ -46,7 +57,7 @@ html {
         </Link>
 
         {/* Page content */}
-        {children}
+        <main>{children}</main>
 
         {/* Global utilities */}
         <CookieConsent />

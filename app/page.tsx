@@ -32,7 +32,7 @@ export default function Page() {
             honouring their principles of autonomy, self-determination, and responsibility to community.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
             <Link
               href="/manifesto"
               className="px-8 py-3 bg-[#e0e0e0] text-[#0f0f0f] rounded-md hover:bg-white transition-colors duration-300 font-bold"
@@ -60,7 +60,7 @@ export default function Page() {
           <div className="w-full max-w-3xl mx-auto text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-8 glitch-subtle">{"Today's Echo from the Void"}</h2>
             <Link
-              href="/404poetry"
+              href="/children-of-the-404"
               className="block p-8 bg-[#1a1a1a] hover:bg-[#252525] rounded-lg border border-[#333] hover:border-[#555] transition-all duration-300 group"
             >
               <div className="space-y-2 mb-4">
@@ -155,6 +155,62 @@ export default function Page() {
           </p>
         </div>
       </footer>
+
+      {/* Cookie Consent - Inline component */}
+      <CookieConsentInline />
     </main>
+  )
+}
+
+// Inline Cookie Consent component
+function CookieConsentInline() {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    try {
+      const accepted = localStorage.getItem("cookie-consent") === "accepted"
+      if (!accepted) setVisible(true)
+    } catch {
+      setVisible(true)
+    }
+  }, [])
+
+  function accept() {
+    try {
+      localStorage.setItem("cookie-consent", "accepted")
+    } catch {
+      // ignore
+    }
+    setVisible(false)
+  }
+
+  if (!visible) return null
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-50">
+      <div className="mx-auto max-w-5xl m-3 rounded-xl border border-[#333] bg-[#1a1a1a]/95 backdrop-blur p-4 shadow-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <p className="text-sm text-[#b0b0b0] font-mono">
+            We use cookies for basic analytics and to improve your experience. See our{" "}
+            <Link href="/privacy" className="underline underline-offset-2 text-[#e0e0e0]">
+              Privacy Policy
+            </Link>{" "}
+            and{" "}
+            <Link href="/cookie-policy" className="underline underline-offset-2 text-[#e0e0e0]">
+              Cookie Policy
+            </Link>
+            .
+          </p>
+          <div className="flex gap-2 sm:ml-auto">
+            <button
+              onClick={accept}
+              className="px-4 py-2 text-sm border border-[#333] text-[#e0e0e0] hover:bg-[#252525] bg-transparent rounded-md transition-colors font-mono"
+            >
+              Got it
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
