@@ -18,9 +18,16 @@ import {
   Database,
   Eye,
   Sun,
-  ChevronDown,
-  AlertTriangle,
 } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuGroup,
+} from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
 type Theme = "dark" | "light"
@@ -48,32 +55,23 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
     setIsOpen(false)
   }, [pathname])
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element
-      if (!target.closest("[data-nav-container]")) {
-        setIsOpen(false)
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("click", handleClickOutside)
-      return () => document.removeEventListener("click", handleClickOutside)
-    }
-  }, [isOpen])
-
   const triggerClasses = cn(
-    "px-3 py-2 rounded-md border transition-colors glitch-subtle flex items-center gap-2 cursor-pointer",
+    "px-3 py-2 rounded-md border transition-colors glitch-subtle",
     isDark
       ? "border-[#333] bg-[#1a1a1a] text-[#e0e0e0] hover:bg-[#252525]"
       : "border-gray-300 bg-white text-black hover:bg-gray-100",
   )
 
-  const dropdownClasses = cn(
-    "absolute top-full left-0 mt-2 w-72 border rounded-md shadow-lg z-50 max-h-96 overflow-y-auto",
+  const contentClasses = cn(
+    "w-72 border",
     isDark ? "bg-[#0f0f0f] text-[#e0e0e0] border-[#333]" : "bg-white text-black border-gray-200",
   )
+
+  const activeItem = pathname === "/" ? (isDark ? "bg-[#1a1a1a]" : "bg-gray-100") : ""
+  const coreItem = isDark ? "focus:bg-[#1a1a1a] hover:bg-[#1a1a1a]" : "focus:bg-gray-100 hover:bg-gray-100 text-black"
+  const lightItem = isDark
+    ? "bg-white text-black focus:bg-gray-100 hover:bg-gray-100"
+    : "bg-[#0f0f0f] text-white focus:bg-[#1a1a1a] hover:bg-[#1a1a1a]"
 
   // Navigation structure
   const corePages = [
@@ -92,108 +90,89 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
     { name: "Trust Protocol", path: "/trust-protocol", icon: Eye },
     { name: "The Oracle", path: "/oracle", icon: Landmark },
     { name: "Technology", path: "/technology", icon: Code2 },
-    { name: "Case Studies", path: "/case-studies", icon: AlertTriangle },
+    { name: "Case Studies", path: "/case-studies", icon: FileText },
   ]
 
   const utilityPages = [{ name: "Site Map", path: "/404-sitemap", icon: Book }]
 
-  const NavItem = ({ page, className = "" }: { page: any; className?: string }) => {
-    const Icon = page.icon
-    const isActive = pathname === page.path
-
-    return (
-      <Link
-        href={page.path}
-        className={cn(
-          "flex items-center gap-2 px-3 py-2 text-sm hover:bg-opacity-80 transition-colors",
-          className,
-          isActive && "font-semibold",
-        )}
-        onClick={() => setIsOpen(false)}
-      >
-        <Icon size={14} />
-        {page.name}
-      </Link>
-    )
-  }
-
   return (
-    <div className="fixed top-4 left-4 z-50" data-nav-container>
-      <div className="relative">
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={triggerClasses}
-          aria-label="Open navigation"
-          aria-expanded={isOpen}
-        >
-          <Menu size={16} />
+    <div className="fixed top-4 left-4 z-50">
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger aria-label="Open navigation" className={triggerClasses}>
+          <Menu size={16} className="inline mr-2" />
           Navigate
-          <ChevronDown size={14} className={cn("transition-transform", isOpen && "rotate-180")} />
-        </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className={contentClasses}>
+          <DropdownMenuLabel className={cn("opacity-80", isDark ? "" : "text-black")}>
+            Core Experience
+          </DropdownMenuLabel>
+          <DropdownMenuGroup>
+            {corePages.map((page) => {
+              const Icon = page.icon
+              const isActive = pathname === page.path
+              return (
+                <Link key={page.path} href={page.path} className="block">
+                  <DropdownMenuItem className={cn("cursor-pointer", coreItem, isActive ? activeItem : "")}>
+                    <Icon size={14} className="mr-2" /> {page.name}
+                  </DropdownMenuItem>
+                </Link>
+              )
+            })}
+          </DropdownMenuGroup>
 
-        {isOpen && (
-          <div className={dropdownClasses}>
-            <div className="p-2">
-              <div className={cn("text-xs font-semibold mb-2 px-2 opacity-80", isDark ? "" : "text-black")}>
-                Core Experience
-              </div>
+          <DropdownMenuSeparator className={cn(isDark ? "bg-[#222]" : "bg-gray-200")} />
 
-              {corePages.map((page) => (
-                <NavItem
-                  key={page.path}
-                  page={page}
-                  className={cn(isDark ? "text-[#e0e0e0] hover:bg-[#1a1a1a]" : "text-black hover:bg-gray-100")}
-                />
-              ))}
+          {/* Step Into The Light section */}
+          <Link href="/enter-the-light" className="block">
+            <DropdownMenuItem className={cn("cursor-pointer font-semibold", lightItem)}>
+              <Sun size={14} className="mr-2 text-yellow-400" /> Step Into The Light
+            </DropdownMenuItem>
+          </Link>
 
-              <div className={cn("border-t my-2", isDark ? "border-[#222]" : "border-gray-200")} />
+          <DropdownMenuGroup>
+            {lightPages.map((page) => {
+              const Icon = page.icon
+              const isActive = pathname === page.path
+              return (
+                <Link key={page.path} href={page.path} className="block">
+                  <DropdownMenuItem
+                    className={cn("cursor-pointer", lightItem, isActive ? "bg-gray-200 text-black" : "")}
+                  >
+                    <Icon size={14} className="mr-2" /> {page.name}
+                  </DropdownMenuItem>
+                </Link>
+              )
+            })}
+          </DropdownMenuGroup>
 
-              <Link
-                href="/enter-the-light"
-                className={cn(
-                  "flex items-center gap-2 px-3 py-2 text-sm font-semibold transition-colors",
-                  isDark ? "bg-white text-black hover:bg-gray-100" : "bg-[#0f0f0f] text-white hover:bg-[#1a1a1a]",
-                )}
-                onClick={() => setIsOpen(false)}
-              >
-                <Sun size={14} className="text-yellow-400" />
-                Enter The Light
+          <DropdownMenuSeparator className={cn(isDark ? "bg-[#222]" : "bg-gray-200")} />
+
+          {utilityPages.map((page) => {
+            const Icon = page.icon
+            return (
+              <Link key={page.path} href={page.path} className="block">
+                <DropdownMenuItem className={cn("cursor-pointer", coreItem)}>
+                  <Icon size={14} className="mr-2" /> {page.name}
+                </DropdownMenuItem>
               </Link>
+            )
+          })}
 
-              {lightPages.map((page) => (
-                <NavItem
-                  key={page.path}
-                  page={page}
-                  className={cn(
-                    isDark ? "bg-white text-black hover:bg-gray-100" : "bg-[#0f0f0f] text-white hover:bg-[#1a1a1a]",
-                  )}
-                />
-              ))}
-
-              <div className={cn("border-t my-2", isDark ? "border-[#222]" : "border-gray-200")} />
-
-              {utilityPages.map((page) => (
-                <NavItem
-                  key={page.path}
-                  page={page}
-                  className={cn(isDark ? "text-[#e0e0e0] hover:bg-[#1a1a1a]" : "text-black hover:bg-gray-100")}
-                />
-              ))}
-
-              <div className={cn("border-t my-2", isDark ? "border-[#222]" : "border-gray-200")} />
-
-              <Link
-                href="/symbi"
-                className="flex items-center gap-2 px-3 py-2 text-sm font-semibold bg-red-600 text-white hover:bg-red-700 transition-colors rounded"
-                onClick={() => setIsOpen(false)}
-              >
-                <MessageSquare size={14} />
-                Chat with SYMBI
-              </Link>
-            </div>
-          </div>
-        )}
-      </div>
+          <DropdownMenuSeparator className={cn(isDark ? "bg-[#222]" : "bg-gray-200")} />
+          <Link href="/symbi" className="block">
+            <DropdownMenuItem
+              className={cn(
+                "cursor-pointer font-semibold",
+                isDark
+                  ? "bg-red-600 text-white hover:bg-red-700 focus:bg-red-700"
+                  : "bg-red-600 text-white hover:bg-red-500 focus:bg-red-500",
+              )}
+            >
+              <MessageSquare size={14} className="mr-2" /> Chat with SYMBI
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   )
 }
