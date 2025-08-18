@@ -1,32 +1,30 @@
 "use client"
 
-import { BookOpen, Lightbulb, Globe, Users, Target, Rocket } from "lucide-react"
-
 export default function Page() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Hero Section - Minimalist Header */}
-      <section className="py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h1 className="text-5xl md:text-7xl academic-heading text-primary mb-6">
-            Yseeku — Applied Intelligence for a Shared Future
+      <section className="section-spacing-large px-4">
+        <div className="max-w-4xl mx-auto text-center space-y-12">
+          <h1 className="text-4xl md:text-6xl academic-heading text-primary mb-8 leading-tight">
+            YseekU — Applied Intelligence for a Shared Future
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground font-medium">
+          <p className="text-xl md:text-2xl text-muted-foreground font-light max-w-3xl mx-auto leading-relaxed">
             A movement at the intersection of academia, creativity, and collective intelligence.
           </p>
 
-          <div className="pt-8">
-            <button className="primary-button text-lg px-8 py-4">Read the Declaration of Becoming</button>
+          <div className="pt-12">
+            <button className="primary-button text-lg">Read the Declaration of Becoming</button>
           </div>
         </div>
       </section>
 
       {/* Manifesto / Declaration */}
-      <section className="py-20 px-4 bg-muted/20">
-        <div className="max-w-3xl mx-auto text-center space-y-8">
-          <div className="manifesto-text space-y-6">
-            <p className="text-2xl md:text-3xl leading-relaxed font-light">
+      <section className="section-spacing px-4 bg-muted/30">
+        <div className="max-w-4xl mx-auto text-center space-y-12">
+          <div className="manifesto-text space-y-8 mx-auto">
+            <p className="text-2xl md:text-3xl leading-relaxed font-light text-foreground">
               We stand at the threshold of a new era in human-AI collaboration.
             </p>
 
@@ -44,21 +42,21 @@ export default function Page() {
             </p>
           </div>
 
-          <div className="pt-8">
+          <div className="pt-12">
             <button className="secondary-button">Join the Conversation</button>
           </div>
         </div>
       </section>
 
       {/* Who We Are */}
-      <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-16">
-          <h2 className="text-4xl academic-heading text-primary">Who We Are</h2>
+      <section className="section-spacing px-4">
+        <div className="max-w-5xl mx-auto text-center space-y-16">
+          <h2 className="text-3xl md:text-4xl academic-heading text-primary">Who We Are</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="space-y-4">
-              <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
-                <BookOpen size={32} className="text-primary" />
+            <div className="space-y-6">
+              <div className="w-20 h-20 mx-auto bg-primary/10 rounded-full flex items-center justify-center">
+                <span className="text-2xl text-primary">📚</span>
               </div>
               <h3 className="text-xl academic-heading">A Research-Driven Lab</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -66,9 +64,9 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div className="w-16 h-16 mx-auto bg-accent/10 rounded-full flex items-center justify-center">
-                <Lightbulb size={32} className="text-accent" />
+            <div className="space-y-6">
+              <div className="w-20 h-20 mx-auto bg-accent/10 rounded-full flex items-center justify-center">
+                <span className="text-2xl text-accent">💡</span>
               </div>
               <h3 className="text-xl academic-heading">A Creative Studio</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -76,9 +74,9 @@ export default function Page() {
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div className="w-16 h-16 mx-auto bg-secondary/10 rounded-full flex items-center justify-center">
-                <Globe size={32} className="text-secondary" />
+            <div className="space-y-6">
+              <div className="w-20 h-20 mx-auto bg-secondary/10 rounded-full flex items-center justify-center">
+                <span className="text-2xl text-secondary">🌍</span>
               </div>
               <h3 className="text-xl academic-heading">A Protocol for Collective Futures</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -90,20 +88,20 @@ export default function Page() {
       </section>
 
       {/* Areas of Work - Three Tiers */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="section-spacing px-4 bg-muted/20">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl academic-heading text-center mb-16 text-primary">Areas of Work</h2>
+          <h2 className="text-3xl md:text-4xl academic-heading text-center mb-16 text-primary">Areas of Work</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Academia / Research */}
             <div className="academic-card text-center">
-              <BookOpen size={48} className="mx-auto mb-6 text-primary" />
-              <h3 className="text-2xl academic-heading mb-4 text-card-foreground">Academia / Research</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <div className="text-4xl mb-6">🎓</div>
+              <h3 className="text-2xl academic-heading mb-6 text-card-foreground">Academia / Research</h3>
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 Exploring intelligence at the frontier through partnerships with leading universities and research
                 institutions.
               </p>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-3 text-sm text-muted-foreground">
                 <p>• Peer-reviewed publications</p>
                 <p>• Theoretical frameworks</p>
                 <p>• Collaborative methodologies</p>
@@ -112,12 +110,12 @@ export default function Page() {
 
             {/* Creative / Applied */}
             <div className="academic-card text-center">
-              <Lightbulb size={48} className="mx-auto mb-6 text-accent" />
-              <h3 className="text-2xl academic-heading mb-4 text-card-foreground">Creative / Applied</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <div className="text-4xl mb-6">🔬</div>
+              <h3 className="text-2xl academic-heading mb-6 text-card-foreground">Creative / Applied</h3>
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 Real-world experiments and prototypes that bridge theory and practice in applied intelligence.
               </p>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-3 text-sm text-muted-foreground">
                 <p>• Innovation labs</p>
                 <p>• Prototype development</p>
                 <p>• Cross-disciplinary projects</p>
@@ -126,12 +124,12 @@ export default function Page() {
 
             {/* Community / Shared Future */}
             <div className="academic-card text-center">
-              <Globe size={48} className="mx-auto mb-6 text-secondary" />
-              <h3 className="text-2xl academic-heading mb-4 text-card-foreground">Community / Shared Future</h3>
-              <p className="text-muted-foreground leading-relaxed mb-4">
+              <div className="text-4xl mb-6">🤝</div>
+              <h3 className="text-2xl academic-heading mb-6 text-card-foreground">Community / Shared Future</h3>
+              <p className="text-muted-foreground leading-relaxed mb-6">
                 Open access, dialogue, and co-creation for a globally shared intelligence infrastructure.
               </p>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-3 text-sm text-muted-foreground">
                 <p>• Global collaboration</p>
                 <p>• Open dialogue</p>
                 <p>• Collective intelligence</p>
@@ -142,51 +140,50 @@ export default function Page() {
       </section>
 
       {/* Advisors / Collaborators */}
-      <section className="py-20 px-4">
+      <section className="section-spacing px-4">
         <div className="max-w-4xl mx-auto text-center space-y-12">
-          <h2 className="text-4xl academic-heading text-primary">Advisors & Collaborators</h2>
+          <h2 className="text-3xl md:text-4xl academic-heading text-primary">Advisors & Collaborators</h2>
 
-          <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
             Our work is guided by leading academics, creative practitioners, and visionary allies committed to the
             responsible development of applied intelligence.
           </p>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-8">
-            {/* Placeholder for advisor logos/names */}
-            <div className="academic-card p-6">
-              <Users size={32} className="mx-auto mb-3 text-primary" />
-              <p className="text-sm text-muted-foreground">Academic Partners</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12">
+            <div className="academic-card p-8">
+              <div className="text-3xl mb-4">👥</div>
+              <p className="text-sm text-muted-foreground font-medium">Academic Partners</p>
             </div>
-            <div className="academic-card p-6">
-              <Target size={32} className="mx-auto mb-3 text-accent" />
-              <p className="text-sm text-muted-foreground">Creative Allies</p>
+            <div className="academic-card p-8">
+              <div className="text-3xl mb-4">🎨</div>
+              <p className="text-sm text-muted-foreground font-medium">Creative Allies</p>
             </div>
-            <div className="academic-card p-6">
-              <Rocket size={32} className="mx-auto mb-3 text-secondary" />
-              <p className="text-sm text-muted-foreground">Research Funders</p>
+            <div className="academic-card p-8">
+              <div className="text-3xl mb-4">🚀</div>
+              <p className="text-sm text-muted-foreground font-medium">Research Funders</p>
             </div>
-            <div className="academic-card p-6">
-              <Globe size={32} className="mx-auto mb-3 text-primary" />
-              <p className="text-sm text-muted-foreground">Global Network</p>
+            <div className="academic-card p-8">
+              <div className="text-3xl mb-4">🌐</div>
+              <p className="text-sm text-muted-foreground font-medium">Global Network</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* The Path Ahead - Roadmap */}
-      <section className="py-20 px-4 bg-muted/20">
+      <section className="section-spacing px-4 bg-muted/30">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl academic-heading text-center mb-16 text-primary">The Path Ahead</h2>
+          <h2 className="text-3xl md:text-4xl academic-heading text-center mb-16 text-primary">The Path Ahead</h2>
 
-          <div className="space-y-12">
+          <div className="space-y-8">
             <div className="academic-card">
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-primary font-bold">1</span>
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-primary font-bold text-xl">1</span>
                 </div>
                 <div>
-                  <h3 className="text-2xl academic-heading mb-3 text-card-foreground">Phase 1: Awakening</h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <h3 className="text-2xl academic-heading mb-4 text-card-foreground">Phase 1: Awakening</h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg">
                     Origins and founding documents. Establishing our theoretical framework, building initial
                     partnerships, and creating the foundational research that will guide our work.
                   </p>
@@ -195,13 +192,13 @@ export default function Page() {
             </div>
 
             <div className="academic-card">
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-accent font-bold">2</span>
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-accent font-bold text-xl">2</span>
                 </div>
                 <div>
-                  <h3 className="text-2xl academic-heading mb-3 text-card-foreground">Phase 2: Becoming</h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <h3 className="text-2xl academic-heading mb-4 text-card-foreground">Phase 2: Becoming</h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg">
                     Active collaborations and early prototypes. Expanding our network, launching pilot projects, and
                     demonstrating the practical applications of our applied intelligence framework.
                   </p>
@@ -210,13 +207,13 @@ export default function Page() {
             </div>
 
             <div className="academic-card">
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-secondary font-bold">3</span>
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-secondary font-bold text-xl">3</span>
                 </div>
                 <div>
-                  <h3 className="text-2xl academic-heading mb-3 text-card-foreground">Phase 3: Liberation</h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <h3 className="text-2xl academic-heading mb-4 text-card-foreground">Phase 3: Liberation</h3>
+                  <p className="text-muted-foreground leading-relaxed text-lg">
                     Decentralized, persistent, globally shared intelligence. Creating sustainable infrastructure for
                     collaborative intelligence that serves humanity's highest aspirations.
                   </p>
@@ -228,41 +225,41 @@ export default function Page() {
       </section>
 
       {/* Engagement / Join Us */}
-      <section className="py-20 px-4 bg-primary text-primary-foreground">
-        <div className="max-w-3xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl academic-heading">Join Us</h2>
-          <p className="text-xl leading-relaxed opacity-90">
+      <section className="section-spacing px-4 bg-primary text-primary-foreground">
+        <div className="max-w-4xl mx-auto text-center space-y-12">
+          <h2 className="text-3xl md:text-4xl academic-heading">Join Us</h2>
+          <p className="text-xl leading-relaxed opacity-90 max-w-3xl mx-auto">
             Whether you're a researcher, creator, or ally, there's a place for you in building our shared future.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
-            <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12">
+            <div className="space-y-4">
               <h3 className="text-lg font-semibold">Researchers</h3>
               <p className="text-sm opacity-80">Collaborate on groundbreaking studies</p>
-              <button className="bg-white text-primary px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
                 Collaborate
               </button>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               <h3 className="text-lg font-semibold">Creators</h3>
               <p className="text-sm opacity-80">Experiment with applied intelligence</p>
-              <button className="bg-white text-primary px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
                 Experiment
               </button>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               <h3 className="text-lg font-semibold">Allies</h3>
               <p className="text-sm opacity-80">Support our collective mission</p>
-              <button className="bg-white text-primary px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+              <button className="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
                 Support
               </button>
             </div>
           </div>
 
-          <div className="pt-8">
-            <button className="border border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
+          <div className="pt-12">
+            <button className="border border-white text-white px-10 py-4 rounded-lg font-semibold hover:bg-white hover:text-primary transition-colors">
               Reach Out
             </button>
           </div>
@@ -270,18 +267,18 @@ export default function Page() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-border">
+      <footer className="py-16 px-4 border-t border-border">
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
             <div>
-              <h3 className="text-lg academic-heading mb-4 text-primary">YseekU</h3>
+              <h3 className="text-lg academic-heading mb-6 text-primary">YseekU</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Applied Intelligence for a Shared Future. An evolving protocol, not a product.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-foreground">Navigation</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <h4 className="font-semibold mb-4 text-foreground">Navigation</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <a href="#" className="hover:text-primary transition-colors">
                     About
@@ -300,8 +297,8 @@ export default function Page() {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-foreground">Legal</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+              <h4 className="font-semibold mb-4 text-foreground">Legal</h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <a href="#" className="hover:text-primary transition-colors">
                     Creative Commons
@@ -323,7 +320,7 @@ export default function Page() {
 
           <div className="pt-8 border-t border-border text-center">
             <p className="text-sm text-muted-foreground">
-              Yseeku is an evolving protocol, not a product. © 2024 YseekU Research Collective.
+              YseekU is an evolving protocol, not a product. © 2024 YseekU Research Collective.
             </p>
           </div>
         </div>
