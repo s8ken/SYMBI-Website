@@ -2,44 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Updated to sophisticated, muted palette for board-level credibility */
+/* Rich earthy tones for mature, calming, intellectual aesthetic */
 :root {
-  --background: #fefefe; /* Warm off-white for softer feel */
-  --foreground: #2d3748; /* Deep charcoal for primary text */
-  --card: #f8fafc; /* Subtle gray-white for cards */
-  --card-foreground: #2d3748; /* Deep charcoal for card text */
-  --popover: #ffffff; /* Pure white for popovers */
-  --popover-foreground: #2d3748; /* Deep charcoal for popover text */
-  --primary: #4a5568; /* Sophisticated slate gray as primary */
-  --primary-foreground: #ffffff; /* White text on primary */
-  --secondary: #68d391; /* Muted sage green for accents */
-  --secondary-foreground: #ffffff; /* White text on secondary */
-  --muted: #f7fafc; /* Very light gray for muted backgrounds */
-  --muted-foreground: #718096; /* Medium gray for muted text */
-  --accent: #81c784; /* Soft green accent */
-  --accent-foreground: #ffffff; /* White text on accent */
-  --destructive: #e53e3e; /* Muted red for errors */
-  --destructive-foreground: #ffffff; /* White text for errors */
-  --border: #e2e8f0; /* Light gray borders */
-  --input: #f7fafc; /* Light gray input backgrounds */
-  --ring: #81c784; /* Soft green focus rings */
-  --chart-1: #4a5568; /* Chart colors in muted palette */
-  --chart-2: #81c784;
-  --chart-3: #a0aec0;
-  --chart-4: #e2e8f0;
-  --chart-5: #f7fafc;
+  --background: #fefcf8; /* Warm off-white background */
+  --foreground: #3c3530; /* Deep warm brown for text */
+  --card: #f9f6f1; /* Soft warm neutral for cards */
+  --card-foreground: #3c3530; /* Deep warm brown for card text */
+  --popover: #fefcf8; /* Warm off-white for popovers */
+  --popover-foreground: #3c3530; /* Deep warm brown for popover text */
+  --primary: #6b5b47; /* Rich warm brown for primary actions */
+  --primary-foreground: #fefcf8; /* Warm off-white text on primary */
+  --secondary: #8a7c6b; /* Muted sage brown for secondary actions */
+  --secondary-foreground: #fefcf8; /* Warm off-white text on secondary */
+  --muted: #f4f1eb; /* Soft neutral for muted backgrounds */
+  --muted-foreground: #6b6358; /* Muted warm gray for secondary text */
+  --accent: #7a8471; /* Gentle sage green accent */
+  --accent-foreground: #fefcf8; /* Warm off-white text on accent */
+  --destructive: #a85a52; /* Muted terracotta for errors */
+  --destructive-foreground: #fefcf8; /* Warm off-white text for errors */
+  --border: #e8e3db; /* Soft warm gray for borders */
+  --input: #f4f1eb; /* Soft neutral for input backgrounds */
+  --ring: #7a8471; /* Gentle sage green for focus rings */
+  --chart-1: #6b5b47; /* Chart color 1 - rich brown */
+  --chart-2: #7a8471; /* Chart color 2 - sage green */
+  --chart-3: #8a7c6b; /* Chart color 3 - muted brown */
+  --chart-4: #a85a52; /* Chart color 4 - terracotta */
+  --chart-5: #6b6358; /* Chart color 5 - warm gray */
   --radius: 0.375rem; /* Subtle rounded corners */
-  --sidebar: #fefefe;
-  --sidebar-foreground: #2d3748;
-  --sidebar-primary: #4a5568;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #81c784;
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #81c784;
+  --sidebar: #fefcf8; /* Warm off-white for sidebar */
+  --sidebar-foreground: #3c3530; /* Deep warm brown for sidebar text */
+  --sidebar-primary: #6b5b47; /* Rich brown for sidebar highlights */
+  --sidebar-primary-foreground: #fefcf8; /* Warm off-white text */
+  --sidebar-accent: #7a8471; /* Sage green for sidebar accents */
+  --sidebar-accent-foreground: #fefcf8; /* Warm off-white text */
+  --sidebar-border: #e8e3db; /* Soft warm gray for sidebar borders */
+  --sidebar-ring: #7a8471; /* Sage green for sidebar focus */
 }
 
-/* Enhanced typography for academic credibility */
+/* Updated body styling for warm, academic aesthetic */
 body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
@@ -48,39 +48,47 @@ body {
   font-weight: 400;
 }
 
+/* Enhanced academic typography with warmer, more sophisticated styling */
 .academic-heading {
   font-family: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.015em;
   line-height: 1.3;
-  color: hsl(var(--foreground));
+  color: hsl(var(--primary));
 }
 
 .manifesto-text {
   font-size: 1.125rem;
   line-height: 1.8;
-  color: hsl(var(--muted-foreground));
-  max-width: 70ch;
-  font-weight: 300;
+  color: hsl(var(--foreground));
+  max-width: 65ch;
+  font-weight: 400;
 }
 
-/* More sophisticated card styling */
+/* Subtle, sophisticated section dividers */
+.section-divider {
+  border-top: 1px solid hsl(var(--border));
+  margin: 5rem 0;
+  opacity: 0.6;
+}
+
+/* Refined card styling with earthy tones */
 .academic-card {
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   border-radius: var(--radius);
   padding: 2.5rem;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(60, 53, 48, 0.05);
 }
 
 .academic-card:hover {
-  border-color: hsl(var(--primary));
-  box-shadow: 0 8px 25px rgba(74, 85, 104, 0.08);
-  transform: translateY(-2px);
+  border-color: hsl(var(--accent));
+  box-shadow: 0 4px 16px rgba(60, 53, 48, 0.08);
+  transform: translateY(-1px);
 }
 
-/* Refined button styling for professional appearance */
+/* Sophisticated button styling with earthy tones */
 .primary-button {
   background: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
@@ -94,15 +102,15 @@ body {
 }
 
 .primary-button:hover {
-  background: #2d3748;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(74, 85, 104, 0.15);
+  background: #5a4d3c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(107, 91, 71, 0.25);
 }
 
 .secondary-button {
   background: transparent;
   color: hsl(var(--primary));
-  border: 1px solid hsl(var(--border));
+  border: 1.5px solid hsl(var(--primary));
   border-radius: var(--radius);
   padding: 1rem 2.5rem;
   font-weight: 500;
@@ -112,28 +120,15 @@ body {
 }
 
 .secondary-button:hover {
-  background: hsl(var(--muted));
-  border-color: hsl(var(--primary));
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(107, 91, 71, 0.2);
 }
 
-/* Added subtle section spacing for better visual hierarchy */
-.section-spacing {
-  padding: 5rem 0;
-}
-
-.section-spacing-large {
-  padding: 6rem 0;
-}
-
-/* Clean section dividers */
-.section-divider {
-  border-top: 1px solid hsl(var(--border));
-  margin: 4rem 0;
-}
-
-/* Clean scrollbar styling */
+/* Refined scrollbar with earthy tones */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -141,12 +136,24 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 4px;
+  background: hsl(var(--accent));
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--primary));
 }
 
-/* Removed all glitch effects and cyberpunk styling for professional appearance */
+/* Additional sophisticated styling for academic feel */
+.text-balance {
+  text-wrap: balance;
+}
+
+.prose-lg {
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+.section-spacing {
+  padding: 6rem 0;
+}
