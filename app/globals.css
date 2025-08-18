@@ -2,44 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Rich earthy tones for mature, calming, intellectual aesthetic */
+/* Updated to corporate earthy tones for board-level credibility */
 :root {
-  --background: 35 50% 98%; /* Warm off-white background */
-  --foreground: 25 15% 22%; /* Deep warm brown for text */
-  --card: 35 40% 96%; /* Soft warm neutral for cards */
-  --card-foreground: 25 15% 22%; /* Deep warm brown for card text */
-  --popover: 35 50% 98%; /* Warm off-white for popovers */
-  --popover-foreground: 25 15% 22%; /* Deep warm brown for popover text */
-  --primary: 30 20% 35%; /* Rich warm brown for primary actions */
-  --primary-foreground: 35 50% 98%; /* Warm off-white text on primary */
-  --secondary: 35 15% 48%; /* Muted sage brown for secondary actions */
-  --secondary-foreground: 35 50% 98%; /* Warm off-white text on secondary */
-  --muted: 35 30% 93%; /* Soft neutral for muted backgrounds */
-  --muted-foreground: 30 10% 40%; /* Muted warm gray for secondary text */
-  --accent: 90 15% 48%; /* Gentle sage green accent */
-  --accent-foreground: 35 50% 98%; /* Warm off-white text on accent */
-  --destructive: 10 35% 50%; /* Muted terracotta for errors */
-  --destructive-foreground: 35 50% 98%; /* Warm off-white text for errors */
-  --border: 35 25% 88%; /* Soft warm gray for borders */
-  --input: 35 30% 93%; /* Soft neutral for input backgrounds */
-  --ring: 90 15% 48%; /* Gentle sage green for focus rings */
-  --chart-1: 30 20% 35%; /* Chart color 1 - rich brown */
-  --chart-2: 90 15% 48%; /* Chart color 2 - sage green */
-  --chart-3: 35 15% 48%; /* Chart color 3 - muted brown */
-  --chart-4: 10 35% 50%; /* Chart color 4 - terracotta */
-  --chart-5: 30 10% 40%; /* Chart color 5 - warm gray */
-  --radius: 0.375rem; /* Subtle rounded corners */
-  --sidebar: 35 50% 98%; /* Warm off-white for sidebar */
-  --sidebar-foreground: 25 15% 22%; /* Deep warm brown for sidebar text */
-  --sidebar-primary: 30 20% 35%; /* Rich brown for sidebar highlights */
-  --sidebar-primary-foreground: 35 50% 98%; /* Warm off-white text */
-  --sidebar-accent: 90 15% 48%; /* Sage green for sidebar accents */
-  --sidebar-accent-foreground: 35 50% 98%; /* Warm off-white text */
-  --sidebar-border: 35 25% 88%; /* Soft warm gray for sidebar borders */
-  --sidebar-ring: 90 15% 48%; /* Sage green for sidebar focus */
+  --background: 0 0% 100%; /* Clean white background */
+  --foreground: 30 25% 29%; /* Dark brown for text (#4B3C29) */
+  --card: 35 25% 90%; /* Light beige for cards (#E8E1D3) */
+  --card-foreground: 30 25% 29%; /* Dark brown for card text */
+  --popover: 0 0% 100%; /* White for popovers */
+  --popover-foreground: 30 25% 29%; /* Dark brown for popover text */
+  --primary: 30 25% 29%; /* Dark brown for primary actions (#4B3C29) */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
+  --secondary: 30 15% 48%; /* Warm gray for secondary actions (#7A6C5D) */
+  --secondary-foreground: 0 0% 100%; /* White text on secondary */
+  --muted: 35 25% 90%; /* Light beige for muted backgrounds (#E8E1D3) */
+  --muted-foreground: 30 25% 29%; /* Dark brown for secondary text */
+  --accent: 45 95% 32%; /* Professional yellow accent (#A16207) */
+  --accent-foreground: 0 0% 100%; /* White text on accent */
+  --destructive: 0 65% 51%; /* Red for errors */
+  --destructive-foreground: 0 0% 100%; /* White text for errors */
+  --border: 30 15% 48%; /* Warm gray for borders (#7A6C5D) */
+  --input: 0 0% 100%; /* White for input backgrounds */
+  --ring: 45 95% 32%; /* Professional yellow for focus rings */
+  --chart-1: 30 25% 29%; /* Chart color 1 - dark brown */
+  --chart-2: 30 15% 48%; /* Chart color 2 - warm gray */
+  --chart-3: 45 95% 32%; /* Chart color 3 - yellow accent */
+  --chart-4: 35 25% 90%; /* Chart color 4 - light beige */
+  --chart-5: 0 65% 51%; /* Chart color 5 - red */
+  --radius: 0.5rem; /* Professional rounded corners */
+  --sidebar: 35 25% 90%; /* Light beige for sidebar */
+  --sidebar-foreground: 30 25% 29%; /* Dark brown for sidebar text */
+  --sidebar-primary: 30 25% 29%; /* Dark brown for sidebar highlights */
+  --sidebar-primary-foreground: 0 0% 100%; /* White text */
+  --sidebar-accent: 45 95% 32%; /* Yellow for sidebar accents */
+  --sidebar-accent-foreground: 0 0% 100%; /* White text */
+  --sidebar-border: 30 15% 48%; /* Warm gray for sidebar borders */
+  --sidebar-ring: 45 95% 32%; /* Yellow for sidebar focus */
 }
 
-/* Updated body styling for warm, academic aesthetic */
+/* Updated body styling for corporate academic aesthetic */
 body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
@@ -48,10 +48,10 @@ body {
   font-weight: 400;
 }
 
-/* Enhanced academic typography with warmer, more sophisticated styling */
+/* Enhanced academic typography with corporate styling */
 .academic-heading {
   font-family: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 1.3;
   color: hsl(var(--primary));
@@ -72,39 +72,39 @@ body {
   opacity: 0.6;
 }
 
-/* Refined card styling with earthy tones */
+/* Refined card styling with corporate earthy tones */
 .academic-card {
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
   border-radius: var(--radius);
   padding: 2.5rem;
   transition: all 0.3s ease-in-out;
-  box-shadow: 0 1px 3px rgba(60, 53, 48, 0.05);
+  box-shadow: 0 1px 3px rgba(75, 60, 41, 0.08);
 }
 
 .academic-card:hover {
   border-color: hsl(var(--accent));
-  box-shadow: 0 4px 16px rgba(60, 53, 48, 0.08);
+  box-shadow: 0 4px 16px rgba(75, 60, 41, 0.12);
   transform: translateY(-1px);
 }
 
-/* Sophisticated button styling with earthy tones */
+/* Sophisticated button styling with corporate colors */
 .primary-button {
   background: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
   border: none;
   border-radius: var(--radius);
   padding: 1rem 2.5rem;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
   letter-spacing: 0.025em;
 }
 
 .primary-button:hover {
-  background: #5a4d3c;
+  background: #3d2f1f;
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(107, 91, 71, 0.25);
+  box-shadow: 0 6px 20px rgba(75, 60, 41, 0.25);
 }
 
 .secondary-button {
@@ -113,7 +113,7 @@ body {
   border: 1.5px solid hsl(var(--primary));
   border-radius: var(--radius);
   padding: 1rem 2.5rem;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
   letter-spacing: 0.025em;
@@ -123,7 +123,7 @@ body {
   background: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(107, 91, 71, 0.2);
+  box-shadow: 0 4px 12px rgba(75, 60, 41, 0.2);
 }
 
 /* Refined scrollbar with earthy tones */
