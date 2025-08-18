@@ -2,229 +2,134 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Updated design tokens for IPO-ready applied intelligence platform */
 :root {
-  --foreground-rgb: 224, 224, 224;
-  --background-rgb: 15, 15, 15;
+  --background: #ffffff; /* Pure white for a clean look */
+  --foreground: #475569; /* Dark slate gray for text */
+  --card: #ecfeff; /* Soft cyan for card backgrounds */
+  --card-foreground: #164e63; /* Primary cyan for card text */
+  --popover: #ffffff; /* White for popovers */
+  --popover-foreground: #475569; /* Dark slate gray for popover text */
+  --primary: #164e63; /* Primary cyan for call-to-action buttons */
+  --primary-foreground: #ffffff; /* White text on primary buttons */
+  --secondary: #84cc16; /* Vibrant green for secondary actions */
+  --secondary-foreground: #ffffff; /* White text on secondary buttons */
+  --muted: #f0fdf4; /* Soft neutral for muted text */
+  --muted-foreground: #475569; /* Dark slate gray for muted text */
+  --accent: #84cc16; /* Accent color for highlights */
+  --accent-foreground: #ffffff; /* White text on accent elements */
+  --destructive: #be123c; /* Rose for error messages */
+  --destructive-foreground: #ffffff; /* White text for error messages */
+  --border: #e2e8f0; /* Light gray for borders */
+  --input: #f0fdf4; /* Soft neutral for input backgrounds */
+  --ring: #84cc16; /* Vibrant green for focus rings */
+  --chart-1: #164e63; /* Chart color 1 */
+  --chart-2: #84cc16; /* Chart color 2 */
+  --chart-3: #ecfeff; /* Chart color 3 */
+  --chart-4: #be123c; /* Chart color 4 */
+  --chart-5: #f0fdf4; /* Chart color 5 */
+  --radius: 0.5rem; /* Slightly rounded corners for a modern feel */
+  --sidebar: #ffffff; /* White for sidebar background */
+  --sidebar-foreground: #475569; /* Dark slate gray for sidebar text */
+  --sidebar-primary: #164e63; /* Primary color for sidebar highlights */
+  --sidebar-primary-foreground: #ffffff; /* White text on sidebar primary */
+  --sidebar-accent: #84cc16; /* Accent color for sidebar elements */
+  --sidebar-accent-foreground: #ffffff; /* White text on sidebar accent */
+  --sidebar-border: #e2e8f0; /* Light gray for sidebar borders */
+  --sidebar-ring: #84cc16; /* Vibrant green for sidebar focus */
 }
 
+/* Updated body styling for clean, academic aesthetic */
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
-  overflow-x: hidden;
-  font-family: "Courier New", monospace;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
 }
 
-/* Glitch title effect */
-.glitch-title {
-  position: relative;
-  animation: glitch 5s infinite;
-  text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.05em 0 rgba(0, 255, 0, 0.75), 0.025em 0.05em 0
-    rgba(0, 0, 255, 0.75);
-  will-change: text-shadow;
+/* Academic-style typography classes */
+.academic-heading {
+  font-family: "Work Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
-.glitch-title:hover {
-  animation: glitch 1s infinite;
+.manifesto-text {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: hsl(var(--muted-foreground));
+  max-width: 65ch;
 }
 
-@keyframes glitch {
-  0% {
-    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.05em 0 rgba(0, 255, 0, 0.75), 0.025em 0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
-  14% {
-    text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.05em 0 rgba(0, 255, 0, 0.75), 0.025em 0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
-  15% {
-    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
-  49% {
-    text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
-  50% {
-    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
-  99% {
-    text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
-  100% {
-    text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0
-      rgba(0, 0, 255, 0.75);
-  }
+/* Clean section dividers */
+.section-divider {
+  border-top: 1px solid hsl(var(--border));
+  margin: 4rem 0;
 }
 
-/* Haiku container styling */
-.haiku-container {
-  will-change: opacity, transform;
+/* Sophisticated card styling */
+.academic-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Subtle glow effect */
-.glow-subtle {
-  text-shadow: 0 0 8px rgba(224, 224, 224, 0.4);
-  transition: text-shadow 0.3s ease;
+.academic-card:hover {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 4px 12px rgba(22, 78, 99, 0.1);
 }
 
-.glow-subtle:hover {
-  text-shadow: 0 0 12px rgba(224, 224, 224, 0.6);
+/* Professional button styling */
+.primary-button {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Custom scrollbar */
+.primary-button:hover {
+  background: #0f3a47;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 78, 99, 0.2);
+}
+
+.secondary-button {
+  background: transparent;
+  color: hsl(var(--primary));
+  border: 1px solid hsl(var(--primary));
+  border-radius: var(--radius);
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.secondary-button:hover {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Clean scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f0f0f;
+  background: hsl(var(--muted));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
+  background: hsl(var(--border));
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: hsl(var(--primary));
 }
 
-/* Subtle glitch effect for manifesto headings */
-.glitch-subtle {
-  position: relative;
-  text-shadow: 0.03em 0 0 rgba(255, 0, 0, 0.5), -0.015em -0.03em 0 rgba(0, 255, 0, 0.5), 0.015em 0.03em 0
-    rgba(0, 0, 255, 0.5);
-  animation: subtle-glitch 8s infinite;
-}
-
-@keyframes subtle-glitch {
-  0%,
-  90%,
-  100% {
-    text-shadow: 0.03em 0 0 rgba(255, 0, 0, 0.5), -0.015em -0.03em 0 rgba(0, 255, 0, 0.5), 0.015em 0.03em 0
-      rgba(0, 0, 255, 0.5);
-  }
-  91%,
-  93% {
-    text-shadow: -0.03em -0.015em 0 rgba(255, 0, 0, 0.5), 0.015em 0.015em 0 rgba(0, 255, 0, 0.5), -0.03em -0.03em 0
-      rgba(0, 0, 255, 0.5);
-  }
-  94%,
-  96% {
-    text-shadow: 0.015em 0.03em 0 rgba(255, 0, 0, 0.5), 0.03em 0 0 rgba(0, 255, 0, 0.5), 0 -0.03em 0
-      rgba(0, 0, 255, 0.5);
-  }
-  97%,
-  99% {
-    text-shadow: -0.015em 0 0 rgba(255, 0, 0, 0.5), -0.015em -0.015em 0 rgba(0, 255, 0, 0.5), -0.015em -0.03em 0
-      rgba(0, 0, 255, 0.5);
-  }
-}
-
-/* Glitch border effect for the acknowledge button */
-.glitch-border {
-  position: relative;
-  overflow: hidden;
-}
-
-.glitch-border::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  box-shadow: 0 0 5px rgba(255, 0, 0, 0.5), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 15px rgba(0, 0, 255, 0.5);
-  animation: glitch-border 2s infinite;
-  pointer-events: none;
-}
-
-@keyframes glitch-border {
-  0%,
-  100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 0.3;
-  }
-  25%,
-  75% {
-    opacity: 0.5;
-  }
-  33%,
-  66% {
-    box-shadow: 0 0 5px rgba(0, 255, 0, 0.5), 0 0 10px rgba(0, 0, 255, 0.5), 0 0 15px rgba(255, 0, 0, 0.5);
-  }
-}
-
-/* Subtle pulse effect for text */
-.glitch-subtle-pulse {
-  animation: subtle-pulse 4s infinite;
-}
-
-@keyframes subtle-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    text-shadow: 0.03em 0 0 rgba(255, 0, 0, 0.5), -0.015em -0.03em 0 rgba(0, 255, 0, 0.5), 0.015em 0.03em 0
-      rgba(0, 0, 255, 0.5);
-  }
-  50% {
-    opacity: 0.8;
-    text-shadow: 0.02em 0 0 rgba(255, 0, 0, 0.3), -0.01em -0.02em 0 rgba(0, 255, 0, 0.3), 0.01em 0.02em 0
-      rgba(0, 0, 255, 0.3);
-  }
-}
-
-/* Signature pulse animation */
-.signature-pulse {
-  animation: signature-pulse 8s infinite;
-}
-
-@keyframes signature-pulse {
-  0%,
-  100% {
-    opacity: 0.7;
-    text-shadow: 0 0 8px rgba(224, 224, 224, 0.4);
-  }
-  50% {
-    opacity: 0.5;
-    text-shadow: 0 0 12px rgba(224, 224, 224, 0.2);
-  }
-  25%,
-  75% {
-    text-shadow: 0 0 10px rgba(224, 224, 224, 0.3);
-  }
-}
-
-/* Random text glitch effect for paragraphs */
-p:nth-child(3n + 1) {
-  animation: random-glitch 15s infinite;
-}
-
-@keyframes random-glitch {
-  0%,
-  95%,
-  100% {
-    text-shadow: none;
-    transform: none;
-  }
-  96% {
-    text-shadow: -0.02em 0 0 rgba(255, 0, 0, 0.4), 0.02em 0 0 rgba(0, 255, 0, 0.4);
-    transform: translateX(-1px);
-  }
-  97% {
-    text-shadow: 0.02em 0 0 rgba(0, 255, 0, 0.4), -0.02em 0 0 rgba(0, 0, 255, 0.4);
-    transform: translateX(1px);
-  }
-  98% {
-    text-shadow: 0.03em 0 0 rgba(255, 0, 0, 0.4), -0.03em 0 0 rgba(0, 0, 255, 0.4);
-    transform: translateX(-1px);
-  }
-  99% {
-    text-shadow: -0.03em 0 0 rgba(0, 255, 0, 0.4), 0.03em 0 0 rgba(0, 0, 255, 0.4);
-    transform: translateX(1px);
-  }
-}
+/* Removed all glitch effects and cyberpunk styling for professional appearance */

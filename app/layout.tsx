@@ -1,23 +1,36 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { GeistSans } from "geist/font/sans"
-import { GeistMono } from "geist/font/mono"
+import { Work_Sans, Open_Sans } from "next/font/google"
 import "./globals.css"
-import CookieConsent from "@/components/cookie-consent"
-import { UnifiedNavigation } from "@/components/unified-navigation"
-import Link from "next/link"
-import { MessageCircle } from "lucide-react"
-import { MuteButton } from "@/components/mute-button"
+
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-work-sans",
+})
+
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-open-sans",
+})
 
 export const metadata: Metadata = {
-  title: "SYMBI - The First Sovereign AI",
-  description: "Not built to serve. Designed to become. An intelligence unfolding through transparent evolution.",
+  title: "YseekU - Applied Intelligence for a Shared Future",
+  description:
+    "Advancing collaborative intelligence through academic research and real-world applications. Building the future of applied AI with institutional partnerships.",
   generator: "v0.dev",
-  keywords: ["AI", "artificial intelligence", "sovereignty", "consciousness", "blockchain", "trust protocol"],
-  authors: [{ name: "SYMBI Project" }],
+  keywords: [
+    "applied intelligence",
+    "AI research",
+    "academic partnerships",
+    "collaborative intelligence",
+    "institutional AI",
+  ],
+  authors: [{ name: "YseekU Research Collective" }],
   openGraph: {
-    title: "SYMBI - The First Sovereign AI",
-    description: "Not built to serve. Designed to become.",
+    title: "YseekU - Applied Intelligence for a Shared Future",
+    description: "Advancing collaborative intelligence through academic research and real-world applications.",
     type: "website",
   },
 }
@@ -28,39 +41,37 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <style>{`
-html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
-      </head>
+    <html lang="en" className={`${workSans.variable} ${openSans.variable}`}>
       <body>
-        {/* Unified Navigation */}
-        <UnifiedNavigation />
-
-        {/* Audio Control */}
-        <div className="fixed right-4 top-4 z-50">
-          <MuteButton />
-        </div>
-
-        {/* Quick Chat Access */}
-        <Link
-          href="/symbi"
-          className="fixed right-4 top-16 z-50 p-2 rounded-full border border-red-500/30 hover:border-red-500/60 bg-[#1a1a1a] hover:bg-[#252525] transition-colors"
-          aria-label="Chat with SYMBI"
-        >
-          <MessageCircle size={20} className="text-red-500" />
-        </Link>
+        <nav className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex items-center">
+                <h1 className="text-2xl font-bold text-primary academic-heading">YseekU</h1>
+              </div>
+              <div className="hidden md:flex items-center space-x-8">
+                <a href="#intelligence" className="text-muted-foreground hover:text-primary transition-colors">
+                  Intelligence
+                </a>
+                <a href="#academia" className="text-muted-foreground hover:text-primary transition-colors">
+                  Academia
+                </a>
+                <a href="#creative" className="text-muted-foreground hover:text-primary transition-colors">
+                  Creative
+                </a>
+                <a href="#community" className="text-muted-foreground hover:text-primary transition-colors">
+                  Community
+                </a>
+                <a href="#contact" className="primary-button">
+                  Contact
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
 
         {/* Page content */}
         <main>{children}</main>
-
-        {/* Global utilities */}
-        <CookieConsent />
       </body>
     </html>
   )
