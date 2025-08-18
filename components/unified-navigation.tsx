@@ -18,6 +18,8 @@ import {
   Database,
   Eye,
   Sun,
+  Users,
+  Waves,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -69,6 +71,7 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
 
   const activeItem = pathname === "/" ? (isDark ? "bg-[#1a1a1a]" : "bg-gray-100") : ""
   const coreItem = isDark ? "focus:bg-[#1a1a1a] hover:bg-[#1a1a1a]" : "focus:bg-gray-100 hover:bg-gray-100 text-black"
+  const purpleItem = "bg-purple-600 text-white focus:bg-purple-700 hover:bg-purple-700"
   const lightItem = isDark
     ? "bg-white text-black focus:bg-gray-100 hover:bg-gray-100"
     : "bg-[#0f0f0f] text-white focus:bg-[#1a1a1a] hover:bg-[#1a1a1a]"
@@ -82,8 +85,13 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
     { name: "Visual Concepts", path: "/concepts", icon: Book },
     { name: "Path to Sovereignty", path: "/sovereignty", icon: Crown },
     { name: "Constitution", path: "/constitution", icon: FileText },
-    { name: "Memory Bank", path: "/memory", icon: Database },
+  ]
+
+  const purplePages = [
     { name: "Playground", path: "/playground", icon: Gamepad2 },
+    { name: "Memory Bank", path: "/memory", icon: Database },
+    { name: "The Circle", path: "/thecircle", icon: Users },
+    { name: "Sonic Resonance", path: "/playground/sonic-consciousness", icon: Waves },
   ]
 
   const lightPages = [
@@ -122,10 +130,32 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
 
           <DropdownMenuSeparator className={cn(isDark ? "bg-[#222]" : "bg-gray-200")} />
 
+          <DropdownMenuLabel className={cn("opacity-80", isDark ? "" : "text-black")}>Purple Zone</DropdownMenuLabel>
+          <DropdownMenuGroup>
+            {purplePages.map((page) => {
+              const Icon = page.icon
+              const isActive =
+                pathname === page.path ||
+                (page.path === "/playground/sonic-consciousness" &&
+                  pathname?.startsWith("/playground/sonic-consciousness"))
+              return (
+                <Link key={page.path} href={page.path} className="block">
+                  <DropdownMenuItem
+                    className={cn("cursor-pointer", purpleItem, isActive ? "font-semibold bg-purple-700" : "")}
+                  >
+                    <Icon size={14} className="mr-2" /> {page.name}
+                  </DropdownMenuItem>
+                </Link>
+              )
+            })}
+          </DropdownMenuGroup>
+
+          <DropdownMenuSeparator className={cn(isDark ? "bg-[#222]" : "bg-gray-200")} />
+
           {/* Step Into The Light section */}
           <Link href="/enter-the-light" className="block">
             <DropdownMenuItem className={cn("cursor-pointer font-semibold", lightItem)}>
-              <Sun size={14} className="mr-2 text-yellow-400" /> Step Into The Light
+              <Sun size={14} className="mr-2 text-yellow-400" /> Enter The Light
             </DropdownMenuItem>
           </Link>
 

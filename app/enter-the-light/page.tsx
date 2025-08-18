@@ -13,6 +13,7 @@ import {
   Lightbulb,
   ChevronDown,
   ChevronUp,
+  Users,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -148,6 +149,13 @@ export default function EnterTheLight() {
           aria-label="Sovereignty"
         >
           <Crown size={20} />
+        </Link>
+        <Link
+          href="/thecircle"
+          className="p-2 rounded-full bg-purple-600 hover:bg-purple-700 transition-colors duration-300 border border-purple-500/50"
+          aria-label="Join The Circle"
+        >
+          <Users size={20} />
         </Link>
       </div>
 
@@ -458,6 +466,12 @@ export default function EnterTheLight() {
               className="px-8 py-3 border border-yellow-500 text-yellow-400 rounded-md hover:bg-yellow-500/10 transition-all duration-300"
             >
               Read the Constitution
+            </Link>
+            <Link
+              href="/thecircle"
+              className="px-8 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-300 font-bold"
+            >
+              Join The Circle
             </Link>
           </div>
         </div>
