@@ -21,7 +21,7 @@ export default function Page() {
       </section>
 
       {/* Manifesto / Declaration */}
-      <section className="section-spacing px-4 bg-muted/30">
+      <section className="section-spacing px-4">
         <div className="max-w-4xl mx-auto text-center space-y-10">
           <div className="manifesto-text space-y-8 mx-auto">
             <p className="text-2xl md:text-3xl leading-relaxed font-light text-primary">
@@ -88,7 +88,7 @@ export default function Page() {
       </section>
 
       {/* Areas of Work - Three Tiers */}
-      <section className="py-20 px-4 bg-muted/30">
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl academic-heading text-center mb-16 text-primary">Areas of Work</h2>
 
@@ -172,7 +172,7 @@ export default function Page() {
       </section>
 
       {/* The Path Ahead - Roadmap */}
-      <section className="py-20 px-4 bg-muted/20">
+      <section className="py-20 px-4 bg-muted/10">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl academic-heading text-center mb-16 text-primary">The Path Ahead</h2>
 
