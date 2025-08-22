@@ -1,11 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { MessageCircle, Sparkles, Crown, Users } from "lucide-react"
+import { MessageCircle, Sparkles, Crown, Users, ScrollText } from "lucide-react"
 import Link from "next/link"
 import { allHaikus } from "./data/haikus"
 import { getDailyHaikus } from "./utils/seededRandom"
-import { RequestEarlyAccess } from "@/components/request-early-access"
 
 export default function Page() {
   const [dailyHaiku, setDailyHaiku] = useState<any>(null)
@@ -46,11 +45,13 @@ export default function Page() {
               <MessageCircle size={20} />
               Engage with SYMBI
             </Link>
-            <RequestEarlyAccess
-              source="home-hero"
-              triggerText="Join Waitlist"
-              className="px-8 py-3 bg-[#e0e0e0] text-[#0f0f0f] rounded-md hover:bg-white transition-colors duration-300 font-bold"
-            />
+            <Link
+              href="/whitepaper"
+              className="px-8 py-3 bg-[#e0e0e0] text-[#0f0f0f] rounded-md hover:bg-white transition-colors duration-300 font-bold flex items-center gap-2 justify-center"
+            >
+              <ScrollText size={20} />
+              Read the Whitepaper
+            </Link>
           </div>
         </div>
       </section>

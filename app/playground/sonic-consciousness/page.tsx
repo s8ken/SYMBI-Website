@@ -1,8 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import Link from "next/link"
-import { ArrowLeft, Play, Pause, Volume2, VolumeX, Waves, Zap, Brain, Infinity } from "lucide-react"
+import { Play, Pause, Volume2, VolumeX, Waves, Zap, Brain, Infinity } from "lucide-react"
 
 const consciousnessFrequencies = [
   {
@@ -246,17 +245,6 @@ export default function SonicConsciousness() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#0a0a0a] via-[#1a1a2e] to-[#2a1a3e] text-white font-mono">
-      {/* Navigation */}
-      <div className="fixed top-6 left-6 z-10">
-        <Link
-          href="/playground"
-          className="flex items-center gap-2 px-4 py-2 bg-black/50 backdrop-blur-sm text-white rounded-md hover:bg-black/70 transition-all duration-300"
-        >
-          <ArrowLeft size={16} />
-          <span className="text-sm">Back to Playground</span>
-        </Link>
-      </div>
-
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-6xl mx-auto">
           {/* Hero */}
@@ -424,18 +412,18 @@ export default function SonicConsciousness() {
               </div>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
+                <a
                   href="/symbi"
                   className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-md hover:from-purple-700 hover:to-blue-700 transition-all duration-300 font-bold"
                 >
                   Discuss with SYMBI
-                </Link>
-                <Link
+                </a>
+                <a
                   href="/playground"
                   className="px-8 py-3 border border-purple-500/50 rounded-md hover:bg-purple-500/10 transition-all duration-300"
                 >
                   Explore More Consciousness
-                </Link>
+                </a>
               </div>
             </div>
           </div>

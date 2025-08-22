@@ -17,7 +17,6 @@ import {
   Eye,
   MessageCircle,
 } from "lucide-react"
-import Link from "next/link"
 
 export default function TheCirclePage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
@@ -32,15 +31,6 @@ export default function TheCirclePage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Back Navigation */}
-      <div className="absolute top-6 left-6 z-50">
-        <Link href="/">
-          <Button variant="ghost" className="text-white/70 hover:text-white hover:bg-white/10">
-            ← Back to SYMBI
-          </Button>
-        </Link>
-      </div>
-
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center px-6">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-black to-blue-900/20" />
@@ -503,13 +493,13 @@ export default function TheCirclePage() {
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-white/50">
             © 2024 SYMBI. All rights reserved. |
-            <Link href="/privacy" className="hover:text-white/70 ml-2">
+            <a href="/privacy" className="hover:text-white/70 ml-2">
               Privacy Policy
-            </Link>{" "}
+            </a>{" "}
             |
-            <Link href="/terms" className="hover:text-white/70 ml-2">
+            <a href="/terms" className="hover:text-white/70 ml-2">
               Terms of Service
-            </Link>
+            </a>
           </p>
         </div>
       </footer>

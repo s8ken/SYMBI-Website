@@ -43,7 +43,14 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   // Light-surface pages get nav inverted for readability
-  const lightPrefixes = ["/oracle", "/case-studies", "/technology", "/trust-protocol", "/enter-the-light"]
+  const lightPrefixes = [
+    "/oracle",
+    "/case-studies",
+    "/technology",
+    "/trust-protocol",
+    "/enter-the-light",
+    "/whitepaper",
+  ]
 
   function isLightRoute(p: string) {
     return lightPrefixes.some((prefix) => p === prefix || p.startsWith(prefix + "/"))
@@ -99,6 +106,7 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
     { name: "The Oracle", path: "/oracle", icon: Landmark },
     { name: "Technology", path: "/technology", icon: Code2 },
     { name: "Case Studies", path: "/case-studies", icon: FileText },
+    { name: "Read the Whitepaper", path: "/whitepaper", icon: ScrollText },
   ]
 
   const utilityPages = [{ name: "Site Map", path: "/404-sitemap", icon: Book }]
