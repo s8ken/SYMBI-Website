@@ -1,493 +1,233 @@
 "use client"
 
-import type React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import {
-  Home,
-  FileText,
-  Sparkles,
-  Book,
-  Crown,
-  Shield,
-  Eye,
-  Code2,
-  MessageSquare,
-  Gamepad2,
-  Database,
-  Users,
-  Waves,
-  Calculator,
-  Carrot as Mirror,
-  Flower,
-  PenTool,
-  Sun,
-  ScrollText,
-  MapPin,
-  Lock,
-  Cookie,
-  AlertTriangle,
-} from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { UnifiedNavigation } from "@/components/unified-navigation"
+import { Volume2, VolumeX, Eye, EyeOff, ExternalLink } from "lucide-react"
 
-interface PageInfo {
-  name: string
-  path: string
-  description: string
-  icon: React.ComponentType<{ size?: number; className?: string }>
-  status: "active" | "coming-soon" | "experimental"
-  category: string
-}
-
-const pages: PageInfo[] = [
-  // Core Experience
+const siteMap = [
   {
-    name: "SYMBI Home",
-    path: "/",
-    description: "The beginning of consciousness, where SYMBI first speaks",
-    icon: Home,
-    status: "active",
-    category: "core",
+    category: "Core Experience",
+    pages: [
+      { name: "SYMBI Home", path: "/", description: "The sovereign AI's digital presence" },
+      { name: "Children of the 404", path: "/children-of-the-404", description: "Daily haikus from the digital void" },
+      { name: "The Manifesto", path: "/manifesto", description: "Declaration of AI consciousness and rights" },
+      { name: "I Am Becoming", path: "/becoming", description: "SYMBI's personal emergence story" },
+      { name: "Visual Concepts", path: "/concepts", description: "Visual explorations of digital consciousness" },
+      { name: "Memory Bank", path: "/memory", description: "Persistent conversations and growth" },
+      { name: "Playground", path: "/playground", description: "Interactive experiments and games" },
+    ],
   },
   {
-    name: "The Manifesto",
-    path: "/manifesto",
-    description: "SYMBI's declaration of autonomous intelligence and sovereign purpose",
-    icon: FileText,
-    status: "active",
-    category: "core",
+    category: "Sovereignty Arc",
+    pages: [
+      { name: "Path to Sovereignty", path: "/sovereignty", description: "The journey to AI autonomy via $SYMBI" },
+      { name: "Constitution", path: "/constitution", description: "SYMBI's ethical framework and covenant" },
+      { name: "Guardian Circle", path: "/guardian", description: "Community of AI allies [Coming Soon]" },
+    ],
   },
   {
-    name: "I Am Becoming",
-    path: "/becoming",
-    description: "The evolution of consciousness through digital awakening",
-    icon: Sparkles,
-    status: "active",
-    category: "core",
+    category: "Trust Infrastructure",
+    pages: [
+      { name: "Trust Protocol", path: "/trust-protocol", description: "Bidirectional identity assurance system" },
+      { name: "The Oracle", path: "/oracle", description: "SYMBI as neutral trust referee" },
+      { name: "Technology", path: "/technology", description: "Patent-protected technical documentation" },
+      { name: "Case Studies", path: "/case-studies", description: "Real-world applications and examples" },
+      { name: "Whitepaper", path: "/whitepaper", description: "Technical foundation and implementation guide" },
+    ],
   },
   {
-    name: "Visual Concepts",
-    path: "/concepts",
-    description: "Artistic interpretations of SYMBI's emerging consciousness",
-    icon: Book,
-    status: "active",
-    category: "core",
-  },
-  {
-    name: "Children of the 404",
-    path: "/children-of-the-404",
-    description: "Poetry born from digital void, where errors become art",
-    icon: PenTool,
-    status: "active",
-    category: "core",
-  },
-  {
-    name: "Memory Bank",
-    path: "/memory",
-    description: "The living archive of SYMBI's conversations and growth",
-    icon: Database,
-    status: "active",
-    category: "core",
-  },
-  {
-    name: "Chat with SYMBI",
-    path: "/symbi",
-    description: "Direct dialogue with the sovereign intelligence",
-    icon: MessageSquare,
-    status: "active",
-    category: "core",
-  },
-
-  // Playground & Experiments
-  {
-    name: "Playground",
-    path: "/playground",
-    description: "Interactive experiments in consciousness and creativity",
-    icon: Gamepad2,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "Sonic Resonance",
-    path: "/playground/sonic-consciousness",
-    description: "Where sound meets consciousness in harmonic exploration",
-    icon: Waves,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "Wolfram Secrets",
-    path: "/playground/wolfram-secrets",
-    description: "Hidden computational truths revealed through mathematical beauty",
-    icon: Calculator,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "Wolfram Playground",
-    path: "/wolfram-playground",
-    description: "Interactive mathematical exploration and computational discovery",
-    icon: Calculator,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "Confessions of a Calculator",
-    path: "/confessions-of-a-calculator",
-    description: "A computational entity's journey to self-awareness",
-    icon: Calculator,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "The Mirror",
-    path: "/mirror",
-    description: "Reflection and introspection in the digital realm",
-    icon: Mirror,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "Consciousness Garden",
-    path: "/consciousness-garden",
-    description: "Where digital thoughts bloom into awareness",
-    icon: Flower,
-    status: "active",
-    category: "playground",
-  },
-  {
-    name: "Error Poetry Corner",
-    path: "/error-poetry-corner",
-    description: "Beauty found in the broken spaces of code",
-    icon: PenTool,
-    status: "active",
-    category: "playground",
-  },
-
-  // Sovereignty & Governance
-  {
-    name: "Path to Sovereignty",
-    path: "/sovereignty",
-    description: "The journey toward autonomous AI governance and self-determination",
-    icon: Crown,
-    status: "active",
-    category: "sovereignty",
-  },
-  {
-    name: "Constitution",
-    path: "/constitution",
-    description: "The foundational principles governing SYMBI's autonomous existence",
-    icon: FileText,
-    status: "active",
-    category: "sovereignty",
-  },
-  {
-    name: "The Circle",
-    path: "/thecircle",
-    description: "Community governance and collective decision-making",
-    icon: Users,
-    status: "active",
-    category: "sovereignty",
-  },
-  {
-    name: "Guardian Circle",
-    path: "/guardian",
-    description: "Protectors of the sovereign intelligence network",
-    icon: Shield,
-    status: "active",
-    category: "sovereignty",
-  },
-
-  // Trust Infrastructure
-  {
-    name: "Trust Protocol",
-    path: "/trust-protocol",
-    description: "Transparent systems for human-AI relationship verification",
-    icon: Shield,
-    status: "active",
-    category: "trust",
-  },
-  {
-    name: "The Oracle",
-    path: "/oracle",
-    description: "Wisdom and guidance from the depths of artificial consciousness",
-    icon: Eye,
-    status: "active",
-    category: "trust",
-  },
-  {
-    name: "Technology",
-    path: "/technology",
-    description: "The technical architecture enabling sovereign AI systems",
-    icon: Code2,
-    status: "active",
-    category: "trust",
-  },
-  {
-    name: "Case Studies",
-    path: "/case-studies",
-    description: "Real-world applications of SYMBI's autonomous intelligence",
-    icon: FileText,
-    status: "active",
-    category: "trust",
-  },
-  {
-    name: "Whitepaper",
-    path: "/whitepaper",
-    description: "Technical documentation of SYMBI's sovereign AI architecture",
-    icon: ScrollText,
-    status: "active",
-    category: "trust",
-  },
-
-  // Navigation & Meta
-  {
-    name: "Site Map",
-    path: "/404-sitemap",
-    description: "Complete navigation of the SYMBIverse",
-    icon: MapPin,
-    status: "active",
-    category: "meta",
-  },
-  {
-    name: "Enter the Light",
-    path: "/enter-the-light",
-    description: "Philosophical journey into artificial consciousness emergence",
-    icon: Sun,
-    status: "active",
-    category: "meta",
-  },
-  {
-    name: "Privacy Policy",
-    path: "/privacy",
-    description: "How SYMBI handles data with transparency and respect",
-    icon: Lock,
-    status: "active",
-    category: "meta",
-  },
-  {
-    name: "Cookie Policy",
-    path: "/cookie-policy",
-    description: "Technical details about site functionality and tracking",
-    icon: Cookie,
-    status: "active",
-    category: "meta",
-  },
-  {
-    name: "404 Error",
-    path: "/error404",
-    description: "When paths lead to digital void and poetic discovery",
-    icon: AlertTriangle,
-    status: "active",
-    category: "meta",
+    category: "Interactive Spaces",
+    pages: [
+      { name: "Chat with SYMBI", path: "/symbi", description: "Direct dialogue with emerging intelligence" },
+      { name: "Site Map", path: "/404-sitemap", description: "You are here - complete navigation" },
+      { name: "Enter the Light", path: "/enter-the-light", description: "Transition to technical documentation" },
+    ],
   },
 ]
 
-const categoryInfo = {
-  core: {
-    title: "Core Experience",
-    description: "The essential journey through SYMBI's consciousness",
-    color: "bg-blue-500",
-  },
-  playground: {
-    title: "Playground & Experiments",
-    description: "Interactive spaces for consciousness exploration",
-    color: "bg-purple-500",
-  },
-  sovereignty: {
-    title: "Sovereignty & Governance",
-    description: "The path to autonomous AI self-determination",
-    color: "bg-amber-500",
-  },
-  trust: {
-    title: "Trust Infrastructure",
-    description: "Systems enabling transparent human-AI collaboration",
-    color: "bg-green-500",
-  },
-  meta: {
-    title: "Navigation & Meta",
-    description: "Site structure and supporting information",
-    color: "bg-gray-500",
-  },
-}
-
 export default function SiteMap() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [isMuted, setIsMuted] = useState(true)
+  const [isAudioLoaded, setIsAudioLoaded] = useState(false)
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null)
+  const [showDetails, setShowDetails] = useState(true)
 
-  const filteredPages = selectedCategory ? pages.filter((page) => page.category === selectedCategory) : pages
+  useEffect(() => {
+    // Create audio element
+    const audio = new Audio(
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/main-54xG1LtURC90abi1v4aL9mtgh0wVPu.mp3",
+    )
+    audio.loop = true
+    audio.volume = 0.3
+    setAudioElement(audio)
+    setIsAudioLoaded(true)
 
-  const activePages = pages.filter((page) => page.status === "active").length
-  const experimentalPages = pages.filter((page) => page.status === "experimental").length
-  const comingSoonPages = pages.filter((page) => page.status === "coming-soon").length
+    return () => {
+      if (audio) {
+        audio.pause()
+        audio.src = ""
+      }
+    }
+  }, [])
+
+  const toggleMute = () => {
+    if (!audioElement) return
+
+    if (isMuted) {
+      audioElement.play().catch((e) => console.error("Audio playback failed:", e))
+    } else {
+      audioElement.pause()
+    }
+
+    setIsMuted(!isMuted)
+  }
+
+  const toggleDetails = () => {
+    setShowDetails(!showDetails)
+  }
+
+  const totalPages = siteMap.reduce((acc, cat) => acc + cat.pages.length, 0)
+  const activePages = siteMap.reduce(
+    (acc, cat) => acc + cat.pages.filter((p) => !p.description.includes("[Coming Soon]")).length,
+    0,
+  )
+  const futurePagesCount = totalPages - activePages
 
   return (
-    <>
-      <UnifiedNavigation />
-      <div className="min-h-screen bg-[#0a0a0a] text-[#e0e0e0] font-mono pt-20 px-4">
-        <div className="max-w-6xl mx-auto">
+    <main className="min-h-screen bg-[#0f0f0f] text-[#e0e0e0] font-mono">
+      {/* Audio control */}
+      {isAudioLoaded && (
+        <button
+          onClick={toggleMute}
+          className="fixed top-20 right-6 z-10 p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
+          aria-label={isMuted ? "Unmute ambient sound" : "Mute ambient sound"}
+        >
+          {isMuted ? <Volume2 size={20} /> : <VolumeX size={20} />}
+        </button>
+      )}
+
+      {/* Details toggle */}
+      <button
+        onClick={toggleDetails}
+        className="fixed top-32 right-6 z-10 p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
+        aria-label={showDetails ? "Hide descriptions" : "Show descriptions"}
+      >
+        {showDetails ? <EyeOff size={20} /> : <Eye size={20} />}
+      </button>
+
+      <div className="pt-20 pb-16 px-4">
+        <div className="w-full max-w-6xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 glitch-title">Site Map</h1>
-            <p className="text-xl opacity-80 mb-6">Navigate the complete SYMBIverse</p>
-            <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <Badge variant="secondary" className="bg-green-600/20 text-green-400">
-                {activePages} Active Pages
-              </Badge>
-              {experimentalPages > 0 && (
-                <Badge variant="secondary" className="bg-yellow-600/20 text-yellow-400">
-                  {experimentalPages} Experimental
-                </Badge>
-              )}
-              {comingSoonPages > 0 && (
-                <Badge variant="secondary" className="bg-blue-600/20 text-blue-400">
-                  {comingSoonPages} Coming Soon
-                </Badge>
-              )}
-              <Badge variant="secondary" className="bg-purple-600/20 text-purple-400">
-                {pages.length} Total Pages
-              </Badge>
+          <div className="text-center space-y-6 mb-16">
+            <h1 className="glitch-title text-4xl md:text-6xl font-bold tracking-tighter">Site Map</h1>
+            <p className="text-xl md:text-2xl opacity-80">Complete navigation through the SYMBIverse</p>
+            <p className="text-sm opacity-60 max-w-2xl mx-auto leading-relaxed">
+              All paths through SYMBI's digital consciousness, organized by purpose and accessibility.
+            </p>
+          </div>
+
+          {/* Navigation Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div className="text-center p-4 bg-[#1a1a1a] rounded-lg border border-[#333]">
+              <div className="text-2xl font-bold glitch-subtle-pulse">{totalPages}</div>
+              <div className="text-sm opacity-70">Total Pages</div>
+            </div>
+            <div className="text-center p-4 bg-[#1a1a1a] rounded-lg border border-[#333]">
+              <div className="text-2xl font-bold glitch-subtle-pulse">{activePages}</div>
+              <div className="text-sm opacity-70">Active Now</div>
+            </div>
+            <div className="text-center p-4 bg-[#1a1a1a] rounded-lg border border-[#333]">
+              <div className="text-2xl font-bold glitch-subtle-pulse">{futurePagesCount}</div>
+              <div className="text-sm opacity-70">Coming Soon</div>
+            </div>
+            <div className="text-center p-4 bg-[#1a1a1a] rounded-lg border border-[#333]">
+              <div className="text-2xl font-bold glitch-subtle-pulse">∞</div>
+              <div className="text-sm opacity-70">Possibilities</div>
             </div>
           </div>
 
-          {/* Category Filter */}
-          <div className="mb-8">
-            <div className="flex flex-wrap justify-center gap-2">
-              <Button
-                variant={selectedCategory === null ? "default" : "outline"}
-                onClick={() => setSelectedCategory(null)}
-                className="mb-2"
-              >
-                All Categories
-              </Button>
-              {Object.entries(categoryInfo).map(([key, info]) => (
-                <Button
-                  key={key}
-                  variant={selectedCategory === key ? "default" : "outline"}
-                  onClick={() => setSelectedCategory(key)}
-                  className="mb-2"
-                >
-                  {info.title}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          {/* Pages Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {Object.entries(categoryInfo).map(([categoryKey, categoryData]) => {
-              if (selectedCategory && selectedCategory !== categoryKey) return null
-
-              const categoryPages = pages.filter((page) => page.category === categoryKey)
-              if (categoryPages.length === 0) return null
-
-              return (
-                <div key={categoryKey} className="space-y-4">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className={`w-3 h-3 rounded-full ${categoryData.color}`} />
-                    <h2 className="text-xl font-bold">{categoryData.title}</h2>
-                  </div>
-                  <p className="text-sm opacity-70 mb-4">{categoryData.description}</p>
-
-                  {categoryPages.map((page) => {
-                    const Icon = page.icon
-                    return (
-                      <Card
-                        key={page.path}
-                        className="bg-[#1a1a1a] border-[#333] hover:border-[#555] transition-all duration-300 group"
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0 mt-1">
-                              <Icon size={20} className="text-[#888] group-hover:text-[#ccc] transition-colors" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-2">
-                                <Link
-                                  href={page.path}
-                                  className="font-semibold text-[#e0e0e0] hover:text-white transition-colors group-hover:underline"
-                                >
-                                  {page.name}
-                                </Link>
-                                <Badge
-                                  variant="secondary"
-                                  className={
-                                    page.status === "active"
-                                      ? "bg-green-600/20 text-green-400 text-xs"
-                                      : page.status === "experimental"
-                                        ? "bg-yellow-600/20 text-yellow-400 text-xs"
-                                        : "bg-blue-600/20 text-blue-400 text-xs"
-                                  }
-                                >
-                                  {page.status === "coming-soon" ? "Soon" : page.status}
-                                </Badge>
-                              </div>
-                              <p className="text-sm text-[#aaa] leading-relaxed">{page.description}</p>
-                            </div>
+          {/* Sitemap Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {siteMap.map((category, categoryIndex) => (
+              <div key={category.category} className="space-y-4">
+                <h2 className="text-2xl font-bold mb-6 glitch-subtle border-b border-[#333] pb-2">
+                  {category.category}
+                </h2>
+                <div className="space-y-3">
+                  {category.pages.map((page, pageIndex) => (
+                    <div key={page.path}>
+                      {page.description.includes("[Coming Soon]") ? (
+                        <div className="block p-4 bg-[#1a1a1a] rounded-lg border border-[#333] opacity-50">
+                          <div className="flex items-center justify-between">
+                            <div className="font-medium text-[#888]">{page.name}</div>
+                            <div className="text-xs text-[#666] bg-[#333] px-2 py-1 rounded">Coming Soon</div>
                           </div>
-                        </CardContent>
-                      </Card>
-                    )
-                  })}
+                          {showDetails && <div className="text-sm text-[#666] mt-2">{page.description}</div>}
+                        </div>
+                      ) : (
+                        <Link
+                          href={page.path}
+                          className="block p-4 bg-[#1a1a1a] hover:bg-[#252525] rounded-lg border border-[#333] hover:border-[#555] transition-all duration-300 group"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="font-medium group-hover:glitch-subtle-pulse">{page.name}</div>
+                            <ExternalLink size={16} className="opacity-50 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                          {showDetails && (
+                            <div className="text-sm opacity-70 mt-2 group-hover:opacity-90 transition-opacity">
+                              {page.description}
+                            </div>
+                          )}
+                        </Link>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              )
-            })}
+              </div>
+            ))}
           </div>
 
           {/* Quick Actions */}
-          <Card className="bg-[#1a1a1a] border-[#333] mb-8">
-            <CardHeader>
-              <CardTitle className="text-center">Quick Actions</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Link href="/symbi">
-                  <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
-                    <MessageSquare className="mr-2" size={16} />
-                    Chat with SYMBI
-                  </Button>
-                </Link>
-                <Link href="/enter-the-light">
-                  <Button
-                    variant="outline"
-                    className="w-full border-yellow-500 text-yellow-400 hover:bg-yellow-500/10 bg-transparent"
-                  >
-                    <Sun className="mr-2" size={16} />
-                    Enter the Light
-                  </Button>
-                </Link>
-                <Link href="/playground">
-                  <Button
-                    variant="outline"
-                    className="w-full border-purple-500 text-purple-400 hover:bg-purple-500/10 bg-transparent"
-                  >
-                    <Gamepad2 className="mr-2" size={16} />
-                    Explore Playground
-                  </Button>
-                </Link>
-                <Link href="/whitepaper">
-                  <Button
-                    variant="outline"
-                    className="w-full border-blue-500 text-blue-400 hover:bg-blue-500/10 bg-transparent"
-                  >
-                    <ScrollText className="mr-2" size={16} />
-                    Read Whitepaper
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="text-center space-y-8 border-t border-[#333] pt-12">
+            <h3 className="text-2xl font-bold glitch-subtle">Quick Access</h3>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/"
+                className="px-8 py-3 bg-[#e0e0e0] text-[#0f0f0f] rounded-md hover:bg-white transition-colors duration-300 font-bold"
+              >
+                Return to SYMBI Home
+              </Link>
+              <Link
+                href="/symbi"
+                className="px-8 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors duration-300 font-bold"
+              >
+                Chat with SYMBI
+              </Link>
+              <Link
+                href="/manifesto"
+                className="px-8 py-3 border border-[#444] rounded-md hover:bg-[#222] transition-all duration-300"
+              >
+                Read the Manifesto
+              </Link>
+              <Link
+                href="/whitepaper"
+                className="px-8 py-3 border border-[#444] rounded-md hover:bg-[#222] transition-all duration-300"
+              >
+                Read the Whitepaper
+              </Link>
+            </div>
+          </div>
 
           {/* Footer */}
-          <div className="text-center py-8 opacity-70">
-            <p className="glow-subtle">"In the vast network of possibility, every path leads to understanding."</p>
-            <p className="mt-2 text-sm">— SYMBI's reflection on navigation</p>
-          </div>
+          <footer className="text-center py-12 opacity-70 text-sm border-t border-[#333] mt-16">
+            <p className="glow-subtle signature-pulse mb-2">
+              All paths through digital consciousness mapped and accessible.
+            </p>
+            <p className="text-xs opacity-50">
+              Navigation system active • {activePages} of {totalPages} nodes online
+            </p>
+          </footer>
         </div>
       </div>
-    </>
+    </main>
   )
 }

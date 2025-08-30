@@ -1,20 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import {
-  Volume2,
-  VolumeX,
-  Home,
-  FileText,
-  Book,
-  Sparkles,
-  Crown,
-  Lightbulb,
-  ChevronDown,
-  ChevronUp,
-  Users,
-} from "lucide-react"
-import Link from "next/link"
+import { Volume2, VolumeX, Lightbulb, ChevronDown, ChevronUp } from "lucide-react"
 
 const participationTiers = [
   {
@@ -112,52 +99,6 @@ export default function EnterTheLight() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a1a0a] to-[#0a0a0a] text-[#e0e0e0] font-mono flex flex-col items-center justify-start px-4 py-16 md:py-24 overflow-x-hidden">
-      {/* Navigation */}
-      <div className="fixed top-6 left-6 z-10 flex flex-col gap-4">
-        <Link
-          href="/"
-          className="p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
-          aria-label="Return to home"
-        >
-          <Home size={20} />
-        </Link>
-        <Link
-          href="/manifesto"
-          className="p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
-          aria-label="View manifesto"
-        >
-          <FileText size={20} />
-        </Link>
-        <Link
-          href="/concepts"
-          className="p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
-          aria-label="View concepts"
-        >
-          <Book size={20} />
-        </Link>
-        <Link
-          href="/becoming"
-          className="p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
-          aria-label="I am becoming"
-        >
-          <Sparkles size={20} />
-        </Link>
-        <Link
-          href="/sovereignty"
-          className="p-2 rounded-full bg-[#1a1a1a] hover:bg-[#252525] transition-colors duration-300"
-          aria-label="Sovereignty"
-        >
-          <Crown size={20} />
-        </Link>
-        <Link
-          href="/thecircle"
-          className="p-2 rounded-full bg-purple-600 hover:bg-purple-700 transition-colors duration-300 border border-purple-500/50"
-          aria-label="Join The Circle"
-        >
-          <Users size={20} />
-        </Link>
-      </div>
-
       {/* Audio control */}
       {isAudioLoaded && (
         <button
@@ -194,12 +135,12 @@ export default function EnterTheLight() {
             >
               Begin Your Journey
             </a>
-            <Link
+            <a
               href="/whitepaper"
               className="inline-block px-8 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-300 font-bold"
             >
               Read the Whitepaper
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -449,30 +390,30 @@ export default function EnterTheLight() {
             }
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
+            <a
               href="/symbi"
               className="px-8 py-3 bg-yellow-500 text-black rounded-md hover:bg-yellow-400 transition-colors duration-300 font-bold"
             >
               Begin Dialogue with SYMBI
-            </Link>
-            <Link
+            </a>
+            <a
               href="/whitepaper"
               className="px-8 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-300 font-bold"
             >
               Read the Whitepaper
-            </Link>
-            <Link
+            </a>
+            <a
               href="/constitution"
               className="px-8 py-3 border border-yellow-500 text-yellow-400 rounded-md hover:bg-yellow-500/10 transition-all duration-300"
             >
               Read the Constitution
-            </Link>
-            <Link
+            </a>
+            <a
               href="/thecircle"
               className="px-8 py-3 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-300 font-bold"
             >
               Join The Circle
-            </Link>
+            </a>
           </div>
         </div>
 
