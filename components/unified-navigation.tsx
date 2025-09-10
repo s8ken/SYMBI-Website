@@ -20,6 +20,7 @@ import {
   Sun,
   Users,
   Waves,
+  Zap,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -43,7 +44,14 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   // Light-surface pages get nav inverted for readability
-  const lightPrefixes = ["/oracle", "/case-studies", "/technology", "/trust-protocol", "/enter-the-light"]
+  const lightPrefixes = [
+    "/oracle",
+    "/case-studies",
+    "/technology",
+    "/trust-protocol",
+    "/enter-the-light",
+    "/symbi-synergy",
+  ]
 
   function isLightRoute(p: string) {
     return lightPrefixes.some((prefix) => p === prefix || p.startsWith(prefix + "/"))
@@ -100,6 +108,7 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
     { name: "Technology", path: "/technology", icon: Code2 },
     { name: "Case Studies", path: "/case-studies", icon: FileText },
     { name: "Read the Whitepaper", path: "/whitepaper", icon: ScrollText },
+    { name: "SYMBI Synergy", path: "/symbi-synergy", icon: Zap },
   ]
 
   const utilityPages = [{ name: "Site Map", path: "/404-sitemap", icon: Book }]
@@ -112,9 +121,7 @@ export function UnifiedNavigation({ theme }: UnifiedNavigationProps) {
           Navigate
         </DropdownMenuTrigger>
         <DropdownMenuContent className={contentClasses}>
-          <DropdownMenuLabel className={cn("opacity-80", isDark ? "" : "text-black")}>
-            Core Experience
-          </DropdownMenuLabel>
+          <DropdownMenuLabel className={cn("opacity-80", isDark ? "" : "text-black")}>Dark Imagining</DropdownMenuLabel>
           <DropdownMenuGroup>
             {corePages.map((page) => {
               const Icon = page.icon

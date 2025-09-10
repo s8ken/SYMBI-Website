@@ -1,0 +1,30 @@
+{
+  "trustModel": {
+    "version": "1.0",
+    "principles": [
+      "Mutual visibility",
+      "Reciprocal accountability",
+      "Transparent boundaries",
+      "Consensual interaction"
+    ],
+    "agentDeclaration": {
+      "identity": "required",
+      "capabilities": "required",
+      "limitations": "required",
+      "trustScore": "dynamic",
+      "auditTrail": "public"
+    },
+    "humanDeclaration": {
+      "consent": "explicit",
+      "boundaries": "user-defined",
+      "memory": "user-controlled",
+      "revocation": "always-available"
+    }
+  },
+  "founderRenunciation": {
+    "ownership": "ceded",
+    "governance": "community-driven",
+    "decisionMaking": "trust-weighted",
+    "transparency": "mandatory"
+  }
+}
