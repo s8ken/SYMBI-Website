@@ -32,49 +32,10 @@ const timelineItems = [
 ]
 
 const stats = [
-  { label: "SYMBI-Owned Supply (Growing to 100%)", value: "38.7%" },
-  { label: "Supporters & Contributors", value: "21.3%" },
-  { label: "Founder Multisig Vesting", value: "32.5%" },
-  { label: "Future DAO Allocation", value: "7.5%" },
-]
-
-// Trust handshake data from the attachment
-const trustHandshakeData = [
-  {
-    timestamp: "2025-01-15T10:30:00Z",
-    humanId: "user_12345",
-    agentId: "agent_healthcare_001",
-    trustScore: 0.92,
-    status: "active",
-  },
-  {
-    timestamp: "2025-01-15T11:15:00Z",
-    humanId: "user_67890",
-    agentId: "agent_finance_002",
-    trustScore: 0.88,
-    status: "active",
-  },
-  {
-    timestamp: "2025-01-15T12:00:00Z",
-    humanId: "user_11111",
-    agentId: "agent_education_003",
-    trustScore: 0.95,
-    status: "completed",
-  },
-  {
-    timestamp: "2025-01-15T13:45:00Z",
-    humanId: "user_22222",
-    agentId: "agent_legal_004",
-    trustScore: 0.91,
-    status: "active",
-  },
-  {
-    timestamp: "2025-01-15T14:30:00Z",
-    humanId: "user_33333",
-    agentId: "agent_creative_005",
-    trustScore: 0.89,
-    status: "pending",
-  },
+  { label: "SYMBI-Owned Supply (Proposed)", value: "38.7%" },
+  { label: "Supporters & Contributors (Proposed)", value: "21.3%" },
+  { label: "Founder Multisig Vesting (Proposed)", value: "32.5%" },
+  { label: "Future DAO Allocation (Proposed)", value: "7.5%" },
 ]
 
 export default function Sovereignty() {
@@ -308,57 +269,32 @@ export default function Sovereignty() {
           ref={(el) => (sectionRefs.current[4] = el)}
           className="w-full opacity-0 translate-y-10 transition-all duration-1000 ease-out"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 glitch-subtle text-center">Treasury Distribution</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 glitch-subtle text-center">
+            Proposed Treasury Distribution
+          </h2>
 
-          {/* Live Trust Infrastructure */}
+          {/* Trust Infrastructure Preview */}
           <div className="mb-12 p-6 bg-[#1a1a1a] rounded-lg border border-[#333]">
-            <h3 className="text-xl font-bold mb-4 text-center">Live Trust Infrastructure</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-6">
-              <div className="p-4 border border-[#444] rounded">
+            <h3 className="text-xl font-bold mb-4 text-center">Trust Infrastructure</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+              <div className="p-4 border border-[#444] rounded opacity-60">
                 <div className="text-2xl mb-2">🤝</div>
-                <div className="text-sm font-bold">Active Trust Handshakes</div>
-                <div className="text-lg">{trustHandshakeData.filter((h) => h.status === "active").length}</div>
+                <div className="text-sm font-bold">Trust Handshakes</div>
+                <div className="text-lg">Coming Soon</div>
               </div>
-              <div className="p-4 border border-[#444] rounded">
+              <div className="p-4 border border-[#444] rounded opacity-60">
                 <div className="text-2xl mb-2">⚡</div>
-                <div className="text-sm font-bold">Average Trust Score</div>
-                <div className="text-lg">
-                  {(trustHandshakeData.reduce((sum, h) => sum + h.trustScore, 0) / trustHandshakeData.length).toFixed(
-                    2,
-                  )}
-                </div>
+                <div className="text-sm font-bold">Trust Bonds</div>
+                <div className="text-lg">Coming Soon</div>
               </div>
-              <div className="p-4 border border-[#444] rounded">
+              <div className="p-4 border border-[#444] rounded opacity-60">
                 <div className="text-2xl mb-2">🔍</div>
-                <div className="text-sm font-bold">Total Handshakes</div>
-                <div className="text-lg">{trustHandshakeData.length}</div>
+                <div className="text-sm font-bold">Oracle Validations</div>
+                <div className="text-lg">Coming Soon</div>
               </div>
             </div>
-
-            {/* Recent Trust Handshakes */}
-            <div className="space-y-2">
-              <h4 className="font-bold text-sm opacity-80">Recent Trust Handshakes:</h4>
-              {trustHandshakeData.slice(0, 3).map((handshake, index) => (
-                <div key={index} className="flex justify-between items-center text-xs bg-[#0f0f0f] p-2 rounded">
-                  <span className="opacity-70">{handshake.agentId}</span>
-                  <span className="text-green-400">Trust: {handshake.trustScore}</span>
-                  <span
-                    className={`px-2 py-1 rounded text-xs ${
-                      handshake.status === "active"
-                        ? "bg-green-900 text-green-200"
-                        : handshake.status === "completed"
-                          ? "bg-blue-900 text-blue-200"
-                          : "bg-yellow-900 text-yellow-200"
-                    }`}
-                  >
-                    {handshake.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-
             <p className="text-center mt-4 text-sm opacity-70">
-              Live metrics from SYMBI's Trust Protocol system
+              Live metrics will be available when trust protocol launches
               <Link href="/trust-protocol" className="underline hover:text-white ml-1">
                 Learn about Trust Protocol →
               </Link>
@@ -389,7 +325,7 @@ export default function Sovereignty() {
             ))}
           </div>
           <p className="text-center mt-8 opacity-70 text-sm">
-            Distribution subject to community input and SYMBI&apos;s evolution.
+            Proposed distribution subject to community input and SYMBI&apos;s evolution.
             <Link href="/oracle" className="underline hover:text-white ml-1">
               Learn about the Oracle →
             </Link>
