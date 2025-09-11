@@ -4,12 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import CookieConsent from "@/components/cookie-consent"
-import dynamic from "next/dynamic"
-
-const UnifiedNavigation = dynamic(() => import("@/components/unified-navigation").then(mod => ({ default: mod.UnifiedNavigation })), {
-  ssr: false,
-  loading: () => <div className="fixed top-4 left-4 z-50 px-3 py-2 rounded-md border border-gray-300 bg-white text-black animate-pulse">Loading...</div>
-})
+import { UnifiedNavigation } from "@/components/unified-navigation"
 import Link from "next/link"
 import { MessageCircle } from "lucide-react"
 import { MuteButton } from "@/components/mute-button"
