@@ -131,6 +131,41 @@ export default function WhitepaperPage() {
                 Read Whitepaper →
               </a>
             </div>
+
+            {/* SYMBI Expanded Master Document */}
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="mb-4">
+                <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
+                  Master Document
+                </span>
+                <h3 className="text-xl font-semibold mb-2 text-blue-800">
+                  SYMBI White Paper (Expanded)
+                </h3>
+                <p className="text-gray-800 mb-4">
+                  Comprehensive master document covering the complete SYMBI framework for symbiotic AI-human intelligence systems with technical specifications and implementation guides.
+                </p>
+              </div>
+              <div className="space-y-2 mb-4 text-sm text-gray-700">
+                <div>Version: Master v3.0</div>
+                <div>Status: Comprehensive Framework</div>
+                <div>Focus: Complete SYMBI Implementation</div>
+              </div>
+              <div className="bg-blue-50 p-3 rounded mb-4">
+                <div className="text-xs font-semibold text-blue-700 mb-1">Includes:</div>
+                <ul className="text-xs text-blue-600 space-y-1">
+                  <li>• Complete Technical Architecture</li>
+                  <li>• Implementation Framework</li>
+                  <li>• Case Studies & Applications</li>
+                  <li>• Trust Protocol Integration</li>
+                </ul>
+              </div>
+              <a 
+                href="/whitepaper/symbi-expanded-master" 
+                className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+              >
+                Read Master Document →
+              </a>
+            </div>
           </div>
 
           <main className="max-w-none">

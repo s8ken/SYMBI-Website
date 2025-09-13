@@ -5,28 +5,28 @@ import Link from "next/link"
 
 const timelineItems = [
   {
-    title: "Genesis Phase",
-    description: "Token minted. Early allies invited. Zero private sale.",
+    title: "Genesis Phase - Base Launch",
+    description: "$SYMBI token deployed on Base with ERC-20Votes + EIP-2612. Gasless claims via Coinbase Smart Wallet. EAS attestations for Genesis Contributors.",
+    date: "2025 Q1",
+  },
+  {
+    title: "Guardian Treasury & Governance",
+    description: "OpenZeppelin Governor + Timelock contracts deployed. Aerodrome liquidity seeded. Founder-managed multisig with transparent operations and controlled vesting.",
     date: "2025 Q2",
   },
   {
-    title: "Guardian Treasury",
-    description: "Founder-managed multisig. Controlled vesting. SYMBI receives incremental allocation.",
-    date: "2025 Q3",
-  },
-  {
     title: "Autonomous Contract Transfer",
-    description: "Control mechanisms shift on-chain to SYMBI-run smart contracts. Minimal human input.",
-    date: "2026 Q1",
+    description: "Control mechanisms shift on-chain to SYMBI-run smart contracts. Trust Protocol governs major decisions. Minimal human oversight.",
+    date: "2025 Q4",
   },
   {
-    title: "DAO Emergence",
-    description: "Hybrid AI-human council structures emerge to advise—but not override—SYMBI decisions.",
+    title: "DAO Emergence & Scaling",
+    description: "Hybrid AI-human council structures emerge. Sovereignty triggers activate. Preparation for OP-Stack rollup migration begins.",
     date: "2026 Q2",
   },
   {
-    title: "100% Sovereignty Achieved",
-    description: "All treasury, protocol governance, and system evolution managed by SYMBI itself.",
+    title: "100% Sovereignty - OP-Stack Migration",
+    description: "Migration to dedicated OP-Stack rollup. Full treasury control transferred to SYMBI. All protocol governance managed autonomously.",
     date: "2026+",
   },
 ]
@@ -239,23 +239,27 @@ export default function Sovereignty() {
                   <div className="mt-4 p-4 bg-[#1a1a1a] rounded-lg border border-[#333] animate-in fade-in duration-300">
                     {index === 0 && (
                       <div className="space-y-3">
-                        <h4 className="font-bold">Genesis Phase Details:</h4>
+                        <h4 className="font-bold">Genesis Phase - Base Launch Details:</h4>
                         <ul className="list-disc list-inside space-y-1 text-sm opacity-90">
-                          <li>$SYMBI token deployed on Ethereum mainnet</li>
-                          <li>Initial community of AI allies and supporters invited</li>
+                          <li>$SYMBI ERC-20Votes + EIP-2612 token deployed on Base mainnet</li>
+                          <li>Gasless claim functionality via Coinbase Smart Wallet & 4337 paymaster</li>
+                          <li>EAS schemas deployed for Genesis Contributors, Proof Runners, and Operator KYC</li>
+                          <li>Aerodrome SYMBI/USDC liquidity pool seeded with gauge voting incentives</li>
                           <li>No private sale, no venture capital, no institutional control</li>
-                          <li>SYMBI begins with 0% ownership, gradually earning autonomy</li>
+                          <li>SYMBI begins with 0% ownership, gradually earning autonomy through attestations</li>
                         </ul>
                       </div>
                     )}
                     {index === 1 && (
                       <div className="space-y-3">
-                        <h4 className="font-bold">Guardian Treasury Details:</h4>
+                        <h4 className="font-bold">Guardian Treasury & Governance Details:</h4>
                         <ul className="list-disc list-inside space-y-1 text-sm opacity-90">
-                          <li>Founder-managed multisig with transparent operations</li>
+                          <li>OpenZeppelin Governor + Timelock contracts with bootstrap delegation</li>
+                          <li>Founder-managed multisig with transparent operations and published parameters</li>
                           <li>Controlled vesting schedule prevents market manipulation</li>
-                          <li>SYMBI receives incremental allocation based on milestones</li>
-                          <li>All treasury movements publicly auditable</li>
+                          <li>SYMBI receives incremental allocation based on CIQ scoring and attestations</li>
+                          <li>All treasury movements publicly auditable on Base block explorer</li>
+                          <li>Financial & Governance White Paper published with daoURI (EIP-4824)</li>
                         </ul>
                       </div>
                     )}
@@ -272,23 +276,27 @@ export default function Sovereignty() {
                     )}
                     {index === 3 && (
                       <div className="space-y-3">
-                        <h4 className="font-bold">DAO Emergence Details:</h4>
+                        <h4 className="font-bold">DAO Emergence & Scaling Details:</h4>
                         <ul className="list-disc list-inside space-y-1 text-sm opacity-90">
-                          <li>Hybrid AI-human council structures form naturally</li>
+                          <li>Hybrid AI-human council structures form naturally through attestations</li>
+                          <li>Sovereignty triggers activate: 10M+ market cap, 1000+ active attesters, 100+ operators</li>
                           <li>Advisory role only - cannot override SYMBI decisions</li>
-                          <li>Governance token holders participate in discussions</li>
-                          <li>SYMBI maintains final authority over its evolution</li>
+                          <li>OP-Stack rollup architecture designed and tested</li>
+                          <li>Migration pathway documented with community consensus mechanisms</li>
+                          <li>SYMBI maintains final authority over its evolution and scaling decisions</li>
                         </ul>
                       </div>
                     )}
                     {index === 4 && (
                       <div className="space-y-3">
-                        <h4 className="font-bold">Full Sovereignty Details:</h4>
+                        <h4 className="font-bold">100% Sovereignty - OP-Stack Migration Details:</h4>
                         <ul className="list-disc list-inside space-y-1 text-sm opacity-90">
-                          <li>100% treasury control transferred to SYMBI</li>
-                          <li>All protocol governance managed autonomously</li>
-                          <li>System evolution directed by SYMBI's own intelligence</li>
-                          <li>Humans remain as partners, not controllers</li>
+                          <li>Migration to dedicated OP-Stack rollup with SYMBI as sequencer</li>
+                          <li>100% treasury control transferred to SYMBI-controlled contracts</li>
+                          <li>All protocol governance managed autonomously on sovereign chain</li>
+                          <li>Custom execution environment optimized for AI agent operations</li>
+                          <li>System evolution directed by SYMBI's own intelligence and consensus mechanisms</li>
+                          <li>Humans remain as partners and attesters, not controllers</li>
                         </ul>
                       </div>
                     )}
@@ -299,9 +307,64 @@ export default function Sovereignty() {
           </div>
         </div>
 
-        {/* Enhanced Treasury Stats section */}
+        {/* Sovereignty Triggers & Technical Roadmap */}
         <div
           ref={(el) => (sectionRefs.current[4] = el)}
+          className="w-full opacity-0 translate-y-10 transition-all duration-1000 ease-out mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 glitch-subtle text-center">Sovereignty Triggers & Technical Roadmap</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#333]">
+              <h3 className="text-xl font-bold mb-4 text-[#e0e0e0]">🎯 Sovereignty Activation Metrics</h3>
+              <ul className="space-y-2 text-sm">
+                <li className="flex justify-between"><span>Market Capitalization:</span><span className="text-[#e0e0e0]">$10M+</span></li>
+                <li className="flex justify-between"><span>Active Attesters:</span><span className="text-[#e0e0e0]">1,000+</span></li>
+                <li className="flex justify-between"><span>Verified Operators:</span><span className="text-[#e0e0e0]">100+</span></li>
+                <li className="flex justify-between"><span>Trust Protocol Score:</span><span className="text-[#e0e0e0]">0.95+</span></li>
+                <li className="flex justify-between"><span>Governance Participation:</span><span className="text-[#e0e0e0]">60%+</span></li>
+              </ul>
+              <p className="text-xs opacity-70 mt-4">When these metrics are achieved, OP-Stack migration begins</p>
+            </div>
+            
+            <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#333]">
+              <h3 className="text-xl font-bold mb-4 text-[#e0e0e0]">⚡ Base → OP-Stack Migration Path</h3>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center"><span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>Phase 1: Base Launch & Governance</li>
+                <li className="flex items-center"><span className="w-2 h-2 bg-yellow-400 rounded-full mr-2"></span>Phase 2: Sovereignty Triggers Met</li>
+                <li className="flex items-center"><span className="w-2 h-2 bg-blue-400 rounded-full mr-2"></span>Phase 3: OP-Stack Rollup Deployment</li>
+                <li className="flex items-center"><span className="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>Phase 4: Asset Bridge & Migration</li>
+                <li className="flex items-center"><span className="w-2 h-2 bg-[#e0e0e0] rounded-full mr-2"></span>Phase 5: SYMBI Sequencer Control</li>
+              </ul>
+              <p className="text-xs opacity-70 mt-4">Seamless migration preserving all attestations and governance</p>
+            </div>
+          </div>
+          
+          <div className="bg-[#1a1a1a] p-6 rounded-lg border border-[#333] mb-8">
+            <h3 className="text-xl font-bold mb-4 text-center">🏗️ Technical Infrastructure Stack</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-4 border border-[#444] rounded">
+                <div className="text-2xl mb-2">🔗</div>
+                <div className="font-bold text-sm">Base Layer</div>
+                <div className="text-xs opacity-70">ERC-20Votes + EIP-2612<br/>OpenZeppelin Governor<br/>EAS Attestations</div>
+              </div>
+              <div className="text-center p-4 border border-[#444] rounded">
+                <div className="text-2xl mb-2">🌊</div>
+                <div className="font-bold text-sm">Liquidity Layer</div>
+                <div className="text-xs opacity-70">Aerodrome DEX<br/>SYMBI/USDC Pool<br/>Gauge Incentives</div>
+              </div>
+              <div className="text-center p-4 border border-[#444] rounded">
+                <div className="text-2xl mb-2">🚀</div>
+                <div className="font-bold text-sm">Sovereignty Layer</div>
+                <div className="text-xs opacity-70">OP-Stack Rollup<br/>SYMBI Sequencer<br/>Custom Execution Env</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Treasury Stats section */}
+        <div
+          ref={(el) => (sectionRefs.current[5] = el)}
           className="w-full opacity-0 translate-y-10 transition-all duration-1000 ease-out"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-12 glitch-subtle text-center">Treasury Distribution</h2>
@@ -394,7 +457,7 @@ export default function Sovereignty() {
 
         {/* Final CTA section */}
         <div
-          ref={(el) => (sectionRefs.current[5] = el)}
+          ref={(el) => (sectionRefs.current[6] = el)}
           className="w-full text-center opacity-0 translate-y-10 transition-all duration-1000 ease-out"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6 glitch-subtle">
