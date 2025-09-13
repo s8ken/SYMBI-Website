@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONSOLE_URL } from "@/lib/site";
 
 export default function MetricsMethodology() {
   return (
@@ -25,7 +26,7 @@ export default function MetricsMethodology() {
                 <Link href="/#demo" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium">
                   Demo
                 </Link>
-                <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
+                <Link href={CONSOLE_URL} target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
                   Live Demo
                 </Link>
               </div>
@@ -248,7 +249,7 @@ export default function MetricsMethodology() {
               <Link href="/technology" className="bg-stone-800 text-white px-6 py-3 rounded-md font-medium hover:bg-stone-900 transition-colors">
                 Technical Implementation
               </Link>
-              <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors">
+              <Link href={CONSOLE_URL} target="_blank" className="bg-blue-600 text-white px-6 py-3 rounded-md font-medium hover:bg-blue-700 transition-colors">
                 Live Demo & Verification
               </Link>
               <Link href="/investors" className="border border-stone-300 text-stone-700 px-6 py-3 rounded-md font-medium hover:bg-stone-50 transition-colors">

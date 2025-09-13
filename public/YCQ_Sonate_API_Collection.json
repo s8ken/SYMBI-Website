@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "YCQ Sonate Platform API",
-    "description": "Complete API collection for YCQ Sonate - AI Trust & Compliance Platform\n\n## Authentication\nThis collection uses JWT Bearer token authentication. First authenticate using the `/auth/login` endpoint, then use the returned token in subsequent requests.\n\n## Base URL\n- **Production:** `https://api.ycqsonate.com`\n- **Demo Environment:** `https://symbi-synergy-pa9k82n5m-ycq.vercel.app/api`\n\n## Key Features Tested\n- Authentication & Authorization (JWT/RBAC)\n- Cryptographic Audit Trails (Ed25519 signatures)\n- Multi-Provider AI Integration (OpenAI, Anthropic, etc.)\n- Trust Scoring & Metrics (TIS, FAR, PFI, LOI)\n- Policy Enforcement & Guardrails\n- Real-time Monitoring & Health Checks\n\n## Quick Start\n1. Set environment variables (baseUrl, email, password)\n2. Run \"Auth - Login\" to get your JWT token\n3. Token will be auto-set for all subsequent requests\n4. Explore endpoints in order: Health → Auth → AI → Audit → Metrics",
+    "description": "Complete API collection for YCQ Sonate - AI Trust & Compliance Platform\n\n## Authentication\nThis collection uses JWT Bearer token authentication. First authenticate using the `/auth/login` endpoint, then use the returned token in subsequent requests.\n\n## Base URL\n- **Production:** `https://api.yseeku.com`\n- **Demo Environment:** `https://api.yseeku.com`\n\n## Key Features Tested\n- Authentication & Authorization (JWT/RBAC)\n- Cryptographic Audit Trails (Ed25519 signatures)\n- Multi-Provider AI Integration (OpenAI, Anthropic, etc.)\n- Trust Scoring & Metrics (TIS, FAR, PFI, LOI)\n- Policy Enforcement & Guardrails\n- Real-time Monitoring & Health Checks\n\n## Quick Start\n1. Set environment variables (baseUrl, email, password)\n2. Run \"Auth - Login\" to get your JWT token\n3. Token will be auto-set for all subsequent requests\n4. Explore endpoints in order: Health → Auth → AI → Audit → Metrics",
     "version": "1.0.0",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -23,7 +23,7 @@
         "exec": [
           "// Auto-set base URL if not configured",
           "if (!pm.environment.get('baseUrl')) {",
-          "    pm.environment.set('baseUrl', 'https://symbi-synergy-pa9k82n5m-ycq.vercel.app/api');",
+          "    pm.environment.set('baseUrl', 'https://api.yseeku.com');",
           "}"
         ]
       }
@@ -32,7 +32,7 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": "https://symbi-synergy-pa9k82n5m-ycq.vercel.app/api",
+      "value": "https://api.yseeku.com",
       "type": "string"
     }
   ],

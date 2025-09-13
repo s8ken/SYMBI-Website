@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONSOLE_URL } from "@/lib/site";
 
 export default function Home() {
   return (
@@ -25,7 +26,7 @@ export default function Home() {
                 <Link href="#demo" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium">
                   Demo
                 </Link>
-                <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
+                <Link href={CONSOLE_URL} target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
                   Live Demo
                 </Link>
               </div>
@@ -49,7 +50,7 @@ export default function Home() {
               Prove integrity—then scale what resonates.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-stone-800 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-900 transition-colors">
+              <Link href={CONSOLE_URL} target="_blank" className="bg-stone-800 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-900 transition-colors">
                 Try Live Demo
               </Link>
               <button className="bg-green-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-green-700 transition-colors">
@@ -526,7 +527,7 @@ export default function Home() {
               Professional deployment showcasing enterprise capabilities, 
               security implementation, and technical sophistication.
             </p>
-            <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-amber-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-amber-700 transition-colors">
+            <Link href={CONSOLE_URL} target="_blank" className="bg-amber-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-amber-700 transition-colors">
               Launch Demo →
             </Link>
           </div>
@@ -576,7 +577,7 @@ export default function Home() {
             <Link href="mailto:stephen@yseeku.com" className="bg-amber-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-amber-700 transition-colors">
               Contact for Investment
             </Link>
-            <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="border border-stone-300 text-stone-300 px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-700 transition-colors">
+            <Link href={CONSOLE_URL} target="_blank" className="border border-stone-300 text-stone-300 px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-700 transition-colors">
               Try Demo First
             </Link>
           </div>

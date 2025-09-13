@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONSOLE_URL } from "@/lib/site";
 
 export default function Technology() {
   return (
@@ -25,7 +26,7 @@ export default function Technology() {
                 <Link href="/#demo" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium">
                   Demo
                 </Link>
-                <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
+                <Link href={CONSOLE_URL} target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
                   Live Demo
                 </Link>
               </div>
@@ -512,7 +513,7 @@ console.log(verification.isValid); // true`}
             Comprehensive documentation, SDKs, and developer tools to get you started in minutes, not months.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-amber-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-amber-700 transition-colors">
+            <Link href={CONSOLE_URL} target="_blank" className="bg-amber-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-amber-700 transition-colors">
               Try Live Demo
             </Link>
             <Link href="mailto:stephen@yseeku.com?subject=Technical Integration Discussion" className="border border-stone-300 text-stone-300 px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-700 transition-colors">

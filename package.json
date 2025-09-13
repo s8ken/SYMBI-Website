@@ -2,6 +2,11 @@
   "name": "ycq-website",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s8ken/SYMBI-Website.git"
+  },
+  "homepage": "https://yseeku.com",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",

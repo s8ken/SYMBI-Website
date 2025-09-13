@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CONSOLE_URL } from "@/lib/site";
 
 export default function Investors() {
   return (
@@ -25,7 +26,7 @@ export default function Investors() {
                 <Link href="/#demo" className="text-stone-700 hover:text-stone-900 px-3 py-2 text-sm font-medium">
                   Demo
                 </Link>
-                <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
+                <Link href={CONSOLE_URL} target="_blank" className="bg-stone-800 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-900">
                   Live Demo
                 </Link>
               </div>
@@ -333,7 +334,7 @@ export default function Investors() {
             <Link href="mailto:stephen@yseeku.com?subject=Investment Discussion - YCQ Sonate" className="bg-amber-600 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-amber-700 transition-colors">
               Schedule Investment Discussion
             </Link>
-            <Link href="https://symbi-synergy-pa9k82n5m-ycq.vercel.app" target="_blank" className="border border-stone-300 text-stone-300 px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-700 transition-colors">
+            <Link href={CONSOLE_URL} target="_blank" className="border border-stone-300 text-stone-300 px-8 py-3 rounded-md text-lg font-medium hover:bg-stone-700 transition-colors">
               Experience Live Demo
             </Link>
           </div>
