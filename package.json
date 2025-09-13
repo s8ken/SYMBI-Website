@@ -50,6 +50,7 @@
     "embla-carousel-react": "latest",
     "geist": "latest",
     "input-otp": "latest",
+    "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.2.0",
     "lucide-react": "^0.454.0",
     "next": "^14.2.32",
@@ -64,6 +65,7 @@
     "sonner": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "twitter-api-v2": "^1.27.0",
     "vaul": "latest",
     "zod": "^3.22.4"
   },
