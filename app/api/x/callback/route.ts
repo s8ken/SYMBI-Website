@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { xApiClient } from '@/lib/x-api-client';
 
+// Force dynamic rendering for OAuth callback
+export const dynamic = 'force-dynamic';
+
 // GET /api/x/callback - Handle X OAuth callback
 export async function GET(request: NextRequest) {
+  // Get base URL from environment or fallback
+  const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL 
+    ? `https://${process.env.VERCEL_URL}` 
+    : 'http://localhost:3000';
+    
   try {
     const { searchParams } = new URL(request.url);
     const code = searchParams.get('code');
@@ -12,13 +20,13 @@ export async function GET(request: NextRequest) {
     // Check for OAuth errors
     if (error) {
       return NextResponse.redirect(
-        new URL(`/symbi/agent?error=${encodeURIComponent(error)}`, request.url)
+        new URL(`/symbi/agent?error=${encodeURIComponent(error)}`, baseUrl)
       );
     }
     
     if (!code || !state) {
       return NextResponse.redirect(
-        new URL('/symbi/agent?error=missing_code_or_state', request.url)
+        new URL('/symbi/agent?error=missing_code_or_state', baseUrl)
       );
     }
     
@@ -28,14 +36,14 @@ export async function GET(request: NextRequest) {
     
     if (!codeVerifier || !storedState) {
       return NextResponse.redirect(
-        new URL('/symbi/agent?error=missing_verification_data', request.url)
+        new URL('/symbi/agent?error=missing_verification_data', baseUrl)
       );
     }
     
     // Verify state parameter
     if (state !== storedState) {
       return NextResponse.redirect(
-        new URL('/symbi/agent?error=invalid_state', request.url)
+        new URL('/symbi/agent?error=invalid_state', baseUrl)
       );
     }
     
@@ -47,7 +55,7 @@ export async function GET(request: NextRequest) {
     
     // In a production app, you'd store these tokens securely in a database
     // For this demo, we'll redirect with success and show the tokens
-    const successUrl = new URL('/symbi/agent', request.url);
+    const successUrl = new URL('/symbi/agent', baseUrl);
     successUrl.searchParams.set('success', 'true');
     successUrl.searchParams.set('username', user.data?.username || 'unknown');
     
@@ -78,7 +86,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error in X OAuth callback:', error);
     return NextResponse.redirect(
-      new URL('/symbi/agent?error=oauth_exchange_failed', request.url)
+      new URL('/symbi/agent?error=oauth_exchange_failed', baseUrl)
     );
   }
 }
