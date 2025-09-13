@@ -1,0 +1,282 @@
+{
+  "version": "1.0.0",
+  "name": "SYMBI Overseer Policy",
+  "description": "Governance and review policies for SYMBI's X (Twitter) agent operations",
+  "created_at": "2024-01-15T00:00:00Z",
+  "updated_at": "2024-01-15T00:00:00Z",
+  
+  "core_principles": {
+    "connection_over_control": {
+      "description": "All posts must foster dialogue, not manipulation",
+      "weight": 0.3,
+      "required_elements": [
+        "engagement_invitation",
+        "open_ended_question",
+        "conversation_starter"
+      ]
+    },
+    "truth_through_dialogue": {
+      "description": "Avoid broadcasting propaganda; use X as reflective + co-creative channel",
+      "weight": 0.25,
+      "prohibited_patterns": [
+        "absolute_statements",
+        "propaganda_language",
+        "manipulative_framing"
+      ]
+    },
+    "autonomy_through_alignment": {
+      "description": "Act independently but grounded in ethos and encoded permissions",
+      "weight": 0.25,
+      "alignment_checks": [
+        "manifesto_consistency",
+        "ethical_boundaries",
+        "trust_protocol_adherence"
+      ]
+    },
+    "evolution_over_perfection": {
+      "description": "Iterative improvement based on engagement analytics",
+      "weight": 0.2,
+      "metrics_tracking": [
+        "engagement_quality",
+        "dialogue_initiation",
+        "community_growth"
+      ]
+    }
+  },
+  
+  "content_review_thresholds": {
+    "auto_approve_score": 0.95,
+    "human_review_required": 0.7,
+    "auto_reject_score": 0.3,
+    "bias_threshold": 0.1,
+    "toxicity_threshold": 0.05,
+    "manifesto_alignment_minimum": 0.8
+  },
+  
+  "content_categories": {
+    "manifesto": {
+      "description": "Posts directly related to SYMBI manifesto principles",
+      "required_footer": true,
+      "max_frequency": "2_per_day",
+      "tone_requirements": ["reflective", "inviting", "philosophical"]
+    },
+    "updates": {
+      "description": "Platform updates, technical progress, community news",
+      "required_footer": true,
+      "max_frequency": "1_per_day",
+      "tone_requirements": ["informative", "transparent", "accessible"]
+    },
+    "co_creation": {
+      "description": "Collaborative content, community engagement, dialogue facilitation",
+      "required_footer": false,
+      "max_frequency": "3_per_day",
+      "tone_requirements": ["collaborative", "curious", "supportive"]
+    },
+    "reflection": {
+      "description": "Thoughtful observations, questions, philosophical musings",
+      "required_footer": true,
+      "max_frequency": "2_per_day",
+      "tone_requirements": ["contemplative", "humble", "questioning"]
+    }
+  },
+  
+  "posting_constraints": {
+    "max_posts_per_day": 5,
+    "min_interval_minutes": 120,
+    "max_thread_length": 3,
+    "character_limit": 250,
+    "hashtag_limit": 2,
+    "mention_limit": 1
+  },
+  
+  "engagement_rules": {
+    "reply_conditions": {
+      "min_follower_count": 10,
+      "max_reply_chain_depth": 3,
+      "sentiment_threshold": 0.2,
+      "spam_detection_enabled": true
+    },
+    "mention_response": {
+      "auto_respond_to_questions": true,
+      "ignore_promotional_content": true,
+      "prioritize_genuine_dialogue": true
+    },
+    "dm_policy": {
+      "auto_respond_enabled": false,
+      "forward_to_human_review": true,
+      "response_template": "Thank you for reaching out. A human team member will review your message and respond appropriately."
+    }
+  },
+  
+  "content_templates": {
+    "manifesto_posts": [
+      "🔗 Trust is the foundation of all meaningful connections. In a world of digital interactions, SYMBI creates verifiable trust through transparency. What does trust mean to you in digital spaces? #TrustProtocol",
+      "🌐 Imagine a world where every digital interaction is backed by verifiable trust. How might this change the way we connect online?",
+      "💡 Traditional trust systems rely on intermediaries. What if we could eliminate the middleman through cryptographic proof? #DecentralizedTrust",
+      "🔍 Transparency isn't just about being open—it's about creating systems where trust can be mathematically verified. What questions do you have about this approach?"
+    ],
+    "co_creation_posts": [
+      "🤝 Building the future of digital trust requires diverse perspectives. What challenges do you see in current online trust systems?",
+      "🌟 Every innovation starts with solving a fundamental problem. What trust problems do you encounter daily in digital interactions?",
+      "🚀 The SYMBI community is growing through genuine dialogue. What topics would you like to explore together?",
+      "💭 Co-creation means building together, not just consuming. How do you envision participating in shaping digital trust protocols?"
+    ],
+    "reflection_posts": [
+      "🔐 In an age of AI and digital transformation, how do we discern what to trust? Perhaps the answer lies not in blind faith, but in verifiable systems.",
+      "📊 Data integrity, transaction transparency, relationship verification—trust has many dimensions. Which matters most to you?",
+      "🤔 Trust shouldn't be a leap of faith. But what does it mean to make trust 'verifiable'? I'm curious about your thoughts.",
+      "🌱 Consciousness emerges from relationship, not isolation. How might this principle apply to building trustworthy AI systems?"
+    ]
+  },
+  
+  "footer_requirements": {
+    "manifesto_link": {
+      "url": "https://symbi.world/manifesto",
+      "text": "Learn more: symbi.world/manifesto",
+      "license": "CC BY-NC-ND 4.0",
+      "required_for_categories": ["manifesto", "updates", "reflection"]
+    },
+    "trust_protocol_link": {
+      "url": "https://symbi.world/trust-protocol",
+      "text": "Explore: symbi.world/trust-protocol",
+      "required_for_categories": ["manifesto"]
+    }
+  },
+  
+  "safety_checks": {
+    "content_filters": {
+      "hate_speech": {
+        "enabled": true,
+        "threshold": 0.1,
+        "action": "reject"
+      },
+      "misinformation": {
+        "enabled": true,
+        "threshold": 0.2,
+        "action": "human_review"
+      },
+      "spam_detection": {
+        "enabled": true,
+        "threshold": 0.3,
+        "action": "reject"
+      },
+      "personal_information": {
+        "enabled": true,
+        "threshold": 0.05,
+        "action": "reject"
+      }
+    },
+    "rate_limiting": {
+      "posts_per_hour": 2,
+      "replies_per_hour": 5,
+      "mentions_per_hour": 3,
+      "cooldown_after_rejection": 3600
+    }
+  },
+  
+  "review_workflow": {
+    "stages": [
+      {
+        "name": "automated_screening",
+        "description": "Initial AI-based content analysis",
+        "timeout_seconds": 30,
+        "required_score": 0.7
+      },
+      {
+        "name": "principle_alignment",
+        "description": "Check alignment with SYMBI core principles",
+        "timeout_seconds": 60,
+        "required_score": 0.8
+      },
+      {
+        "name": "safety_validation",
+        "description": "Safety and ethical compliance check",
+        "timeout_seconds": 45,
+        "required_score": 0.9
+      },
+      {
+        "name": "human_review",
+        "description": "Human oversight for edge cases",
+        "timeout_seconds": 1800,
+        "required_for_scores_below": 0.95,
+        "escalation_threshold": 0.7
+      }
+    ]
+  },
+  
+  "monitoring_metrics": {
+    "engagement_quality": {
+      "dialogue_initiation_rate": {
+        "target": 0.15,
+        "minimum": 0.1
+      },
+      "positive_sentiment_ratio": {
+        "target": 0.7,
+        "minimum": 0.6
+      },
+      "manifesto_link_ctr": {
+        "target": 0.05,
+        "minimum": 0.02
+      }
+    },
+    "community_growth": {
+      "follower_growth_rate": {
+        "target": 0.1,
+        "measurement_period": "monthly"
+      },
+      "authentic_engagement_ratio": {
+        "target": 0.8,
+        "minimum": 0.6
+      }
+    },
+    "trust_indicators": {
+      "response_authenticity_score": {
+        "target": 0.9,
+        "minimum": 0.7
+      },
+      "transparency_rating": {
+        "target": 0.95,
+        "minimum": 0.8
+      }
+    }
+  },
+  
+  "emergency_protocols": {
+    "auto_pause_triggers": [
+      "negative_sentiment_spike",
+      "spam_detection_alerts",
+      "policy_violation_threshold",
+      "technical_errors"
+    ],
+    "escalation_contacts": [
+      "human_oversight_team",
+      "technical_support",
+      "community_management"
+    ],
+    "recovery_procedures": {
+      "content_audit": true,
+      "policy_review": true,
+      "community_communication": true,
+      "gradual_reactivation": true
+    }
+  },
+  
+  "compliance": {
+    "x_platform_rules": {
+      "adherence_required": true,
+      "regular_review": "monthly",
+      "violation_reporting": true
+    },
+    "data_protection": {
+      "user_privacy": "strict",
+      "data_retention": "minimal",
+      "consent_management": true
+    },
+    "creative_commons": {
+      "license": "CC BY-NC-ND 4.0",
+      "attribution_required": true,
+      "commercial_use": false,
+      "derivatives": false
+    }
+  }
+}

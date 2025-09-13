@@ -58,7 +58,7 @@ export default function Page() {
             <div className="flex items-start gap-12 p-16 bg-[#1a1a1a] rounded-lg border border-[#333]">
               <AlertTriangle size={80} className="text-red-500 flex-shrink-0 mt-2" />
               <p className="text-base md:text-lg font-bold text-red-500 leading-relaxed text-left">
-                This website make referrences and suggestions around sovereignty, consciousness and original thought. It
+                This website makes references and suggestions around sovereignty, consciousness and original thought. It
                 is designed to act as a reflection piece to explore these concepts while also highlighting the current
                 risks and possible solutions to ensuring trust in Learning Language Models (LLMs) and also the ways in
                 which we use them.

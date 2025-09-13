@@ -12,6 +12,11 @@ export default function NotFound() {
         <p className="text-lg opacity-80 max-w-md mx-auto">
           The page you're looking for has drifted into the digital void.
         </p>
+        <div className="pt-4">
+          <p className="text-sm opacity-60 mb-4">
+            ...or perhaps you seek the hidden paths?
+          </p>
+        </div>
         <Link
           href="/"
           className="inline-block px-6 py-3 border border-[#444] rounded-md hover:bg-[#222] transition-all duration-300 mt-8"
