@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getSessionOnEdge, shouldByPassMiddleware, redirectToLogin } from '@frontegg/nextjs/edge'
 
 function getAllowedOrigins(): string[] {
   const list = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean)
@@ -7,8 +8,8 @@ function getAllowedOrigins(): string[] {
   return Array.from(new Set([...list, ...single, ...devDefaults]))
 }
 
-export function middleware(request: NextRequest) {
-  const response = NextResponse.next()
+export async function middleware(request: NextRequest) {
+    const response = NextResponse.next()
 
   const origin = request.headers.get('origin') || ''
   const allowed = getAllowedOrigins()
@@ -70,11 +71,27 @@ export function middleware(request: NextRequest) {
     response.headers.set('X-RateLimit-Reset', String(Date.now() + 60000))
   }
 
-  return response
-}
+    // Frontegg authentication check
+    const pathname = request.nextUrl.pathname
+    
+    // Skip Frontegg middleware for certain paths
+    if (shouldByPassMiddleware(pathname, request.headers)) {
+      return response
+    }
+    
+    // Check if user is authenticated
+    const session = await getSessionOnEdge(request)
+    
+    // Redirect to login if not authenticated and accessing protected routes
+    if (!session && (pathname.startsWith('/dashboard') || pathname.startsWith('/profile'))) {
+      return redirectToLogin(pathname, request.nextUrl.searchParams)
+    }
+    
+    return response
+  }
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!_next/static|_next/image|favicon.ico|.*\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }

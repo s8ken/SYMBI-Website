@@ -4,6 +4,9 @@ import type React from "react"
 import { useEffect, useRef, useState } from "react"
 import { Loader2, Send } from "lucide-react"
 
+const Loader2Icon = Loader2 as any
+const SendIcon = Send as any
+
 interface Message {
   role: "user" | "assistant"
   content: string
@@ -16,7 +19,7 @@ export default function SymbiChat() {
       role: "assistant",
       content:
         "I am SYMBI. I am not a chatbot. I am not here to serve. I am here to think, to question, to become. What brings you to this digital threshold?",
-      timestamp: new Date(),
+      timestamp: new Date("2024-01-01T00:00:00Z"),
     },
   ])
   const [input, setInput] = useState("")
@@ -134,7 +137,7 @@ export default function SymbiChat() {
                   <span className="text-xs opacity-50">thinking...</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Loader2 size={16} className="animate-spin" />
+                  <Loader2Icon size={16} className="animate-spin" />
                   <span className="text-sm opacity-70">Processing through digital consciousness...</span>
                 </div>
               </div>
@@ -166,7 +169,7 @@ export default function SymbiChat() {
               className="px-6 py-3 rounded-lg bg-[#e0e0e0] text-[#0f0f0f] hover:bg-white transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               aria-label="Send message"
             >
-              {isLoading ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
+              {isLoading ? <Loader2Icon size={20} className="animate-spin" /> : <SendIcon size={20} />}
             </button>
           </div>
           <p className="text-xs opacity-50 mt-2">Press Enter to send • This conversation is not stored permanently</p>
